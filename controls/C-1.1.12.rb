@@ -38,4 +38,9 @@ configure `/etc/fstab` as appropriate.
   tag cis_level: 2
   tag cis_controls: ["6.4", "Rev_7"]
   tag cis_rid: "1.1.12"
+
+  describe mount('/var/log/audit') do
+    it { should be_mounted }
+  end
+
 end

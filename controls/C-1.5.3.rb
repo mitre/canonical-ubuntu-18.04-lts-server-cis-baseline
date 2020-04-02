@@ -36,4 +36,16 @@ privileges without credentials."
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.5.3"
+
+  describe shadow do
+    its('users') { should include 'root' }
+  end
+
+  describe shadow.where(user: 'root') do
+    its('passwords') { should_not include '!' }
+  end
+  describe shadow.where(user: 'root') do
+    its('passwords') { should_not include '*' }
+  end
 end
+

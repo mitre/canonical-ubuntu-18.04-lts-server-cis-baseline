@@ -39,4 +39,9 @@ following line:
   tag cis_level: 1
   tag cis_controls: ["4.3", "Rev_7"]
   tag cis_rid: "1.3.2"
+
+  describe command("grep -Ei '^\\s*Defaults\\s+([^#]+,\\s*)?use_pty(,\\s+\\S+\\s*)*(\\s+#.*)?$' /etc/sudoers /etc/sudoers.d/*").stdout.strip.split("\n") do
+    its('length') { should be > 0 }
+  end
+
 end

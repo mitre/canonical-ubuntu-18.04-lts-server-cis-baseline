@@ -88,4 +88,14 @@ file:
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.6.4"
+
+
+  describe package('systemd-coredump') do
+    it { should_not be_installed }
+  end
+
+  describe kernel_parameter('fs.suid_dumpable') do
+    its('value') { should cmp 0 }
+  end
+
 end

@@ -83,4 +83,12 @@ system partition has been created for `/tmp`
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.1.2"
+
+  describe mount('/tmp') do
+    it { should be_mounted }
+    its('type') { should eq 'tmpfs' }
+  end
+
+  tmp.mount
+
 end

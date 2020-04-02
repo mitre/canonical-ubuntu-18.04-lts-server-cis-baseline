@@ -56,4 +56,9 @@ the system.
   tag cis_level: 1
   tag cis_controls: ["8.3", "Rev_7"]
   tag cis_rid: "1.6.1"
+
+  describe command("journalctl | grep 'protection: active'").stdout.strip.split("\n") do
+    its('length') { should be > 0 }
+  end
+
 end

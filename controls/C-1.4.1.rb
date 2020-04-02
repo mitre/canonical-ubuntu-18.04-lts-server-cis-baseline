@@ -43,4 +43,12 @@ documentation for options.
   tag cis_level: 1
   tag cis_controls: ["14.9", "Rev_7"]
   tag cis_rid: "1.4.1"
+
+  describe package('aide') do
+    it { should be_installed }
+  end
+
+  describe package('aide-common') do
+    it { should be_installed }
+  end
 end

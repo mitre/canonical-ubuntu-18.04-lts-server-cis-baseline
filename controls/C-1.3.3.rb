@@ -52,4 +52,11 @@ following line:
   tag cis_level: 1
   tag cis_controls: ["6.3", "Rev_7"]
   tag cis_rid: "1.3.3"
+
+
+  describe command("grep -Ei '^\\s*Defaults\\s+([^#]+,\\s*)?logfile=(,\\s+\\S+\\s*)*(\\s+#.*)?' /etc/sudoers /etc/sudoers.d/*").stdout.strip.split("\n") do
+    its('length') { should be > 0 }
+  end
+
+
 end

@@ -29,4 +29,17 @@ policy."
   tag cis_level: 1
   tag cis_controls: ["3.4", "3.5", "Rev_7"]
   tag cis_rid: "1.2.1"
+
+
+
+    describe command('apt-cache policy').stdout.strip.split("\n") do
+      its('length') { should be > 11 }
+      skip "Run the following command and verify package repositories are configured
+correctly - ```apt-cache policy```. Configure your package manager repositories according to site
+policy."
+    end
+
+
+
+
 end

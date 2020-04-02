@@ -43,4 +43,14 @@ in security upon boot and be able to exploit them."
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.5.1"
+
+  describe file('/boot/grub/grub.cfg') do
+    its ('uid') { should cmp 0 }
+    its ('gid') { should cmp 0 }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+    it { should_not be_grouped_into 'users' }
+    its ('mode') { should cmp '0400' }
+  end
+
 end

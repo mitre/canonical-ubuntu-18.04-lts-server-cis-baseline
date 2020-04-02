@@ -35,4 +35,9 @@ some distributions this is configured via the `PROMPT_FOR_CONFIRM` option in
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.5.4"
+
+  describe file('/etc/sysconfig/boot') do
+    its('content') { should match '^\\s*PROMPT_FOR_CONFIRM\\s*=\\s*no' }
+  end
+
 end

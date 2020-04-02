@@ -31,4 +31,12 @@ the default Discretionary Access Control system will be available."
   tag cis_level: 1
   tag cis_controls: ["14.6", "Rev_7"]
   tag cis_rid: "1.7.1.1"
+
+  describe package('apparmor') do
+    it { should be_installed }
+  end
+
+  describe package('apparmor-utils') do
+    it { should be_installed }
+  end
 end

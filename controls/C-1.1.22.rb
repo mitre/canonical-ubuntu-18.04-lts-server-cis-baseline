@@ -66,4 +66,9 @@ disabled
   tag cis_level: 1
   tag cis_controls: ["8.4", "8.5", "Rev_7"]
   tag cis_rid: "1.1.22"
+
+  describe service('autofs') do
+    it { should_not be_enabled }
+  end
+
 end

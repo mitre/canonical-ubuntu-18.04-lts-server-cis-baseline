@@ -38,4 +38,9 @@ information.
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.1.9"
+
+  describe mount('/var/tmp') do
+    it { should be_mounted }
+    its('options') { should include 'nosuid' }
+  end
 end

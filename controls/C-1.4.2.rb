@@ -70,4 +70,22 @@ to run the aide check.
   tag cis_level: 1
   tag cis_controls: ["14.9", "Rev_7"]
   tag cis_rid: "1.4.2"
+
+  describe.one do
+    describe service('aide') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    describe crontab('root') do
+      its('user') { should include 'root'}
+      its('commands') { should include '/usr/bin/aide --check' }
+    end
+  end
+
+
+
+
+
 end

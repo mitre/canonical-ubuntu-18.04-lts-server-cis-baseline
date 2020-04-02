@@ -39,4 +39,10 @@ information.
   tag cis_level: 1
   tag cis_controls: ["2.6", "Rev_7"]
   tag cis_rid: "1.1.17"
+
+  describe mount('/dev/shm') do
+    it { should be_mounted }
+    its('options') { should include 'noexec' }
+  end
+
 end

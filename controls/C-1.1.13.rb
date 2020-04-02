@@ -33,4 +33,9 @@ configure `/etc/fstab` as appropriate.
   tag cis_level: 2
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.1.13"
+
+  describe mount('/home') do
+    it { should be_mounted }
+  end
+
 end

@@ -50,4 +50,11 @@ disable it."
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.1.1.5"
+
+  describe kernel_module('hfsplus') do
+    it { should_not be_loaded }
+    it { should be_disabled }
+    it { should be_blacklisted }
+  end
+
 end

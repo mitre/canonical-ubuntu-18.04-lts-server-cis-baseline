@@ -11,15 +11,13 @@ configuration to ensure that the controls it provides are not overridden."
 `apparmor=1` and `security=apparmor` parameters set:
 
     ```
-    # grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"apparmor=1\" | grep
--v '/boot/memtest86+.bin'
+    # grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"apparmor=1\" | grep -v '/boot/memtest86+.bin'
 
     Nothing should be returned
     ```
 
     ```
-    # grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"security=apparmor\" |
-grep -v '/boot/memtest86+.bin'
+    # grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"security=apparmor\" | grep -v '/boot/memtest86+.bin'
 
     Nothing should be returned
     ```
@@ -50,4 +48,16 @@ parameters to the GRUB_CMDLINE_LINUX= line
   tag cis_level: 1
   tag cis_controls: ["14.6", "Rev_7"]
   tag cis_rid: "1.7.1.2"
+
+  describe service('apparmor') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
+
+    describe grub_conf('/boot/grub/grub.cfg') do
+      its('kernel') { should include 'apparmor=1' }
+      its('kernel') { should include 'security=apparmor' }
+    end
+
 end

@@ -59,4 +59,13 @@ installed:
   tag cis_level: 1
   tag cis_controls: ["4.3", "Rev_7"]
   tag cis_rid: "1.3.1"
+
+  describe package('sudo') do
+    it { should be_installed }
+  end
+
+  describe package('sudo-ldap') do
+    it { should be_installed }
+  end
+
 end
