@@ -41,7 +41,6 @@ information.
   tag cis_rid: "1.1.10"
 
   describe mount('/var/tmp') do
-    it { should be_mounted }
     its('options') { should include 'noexec' }
   end
 

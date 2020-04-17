@@ -39,7 +39,6 @@ information.
   tag cis_rid: "1.1.14"
 
   describe mount('/home') do
-    it { should be_mounted }
     its('options') { should include 'nodev' }
   end
 

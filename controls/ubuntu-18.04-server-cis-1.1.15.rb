@@ -41,7 +41,6 @@ information.
   tag cis_rid: "1.1.15"
 
   describe mount('/dev/shm') do
-    it { should be_mounted }
     its('options') { should include 'nodev' }
   end
 

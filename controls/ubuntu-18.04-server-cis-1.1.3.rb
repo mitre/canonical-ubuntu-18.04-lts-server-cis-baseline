@@ -57,8 +57,6 @@ to the `/tmp` mount options:
   tag cis_rid: "1.1.3"
 
   describe mount('/tmp') do
-    it { should be_mounted }
-    its('type') { should eq  'tmpfs' }
     its('options') { should include 'nodev' }
   end
 

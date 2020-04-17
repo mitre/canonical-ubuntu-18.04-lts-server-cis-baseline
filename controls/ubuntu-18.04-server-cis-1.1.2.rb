@@ -84,11 +84,16 @@ system partition has been created for `/tmp`
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.1.2"
 
-  describe mount('/tmp') do
-    it { should be_mounted }
-    its('type') { should eq 'tmpfs' }
+  describe.one do
+    describe systemd_service('tmp.mount') do
+      it { should be_enabled }
+    end
+    describe etc_fstab.where { mount_point == '/tmp' } do
+      its('count') { should cmp 1 }
+      it 'Should have a device name specified' do
+        expect(subject.device_name[0]).to_not(be_empty)
+      end
+    end
   end
-
-  tmp.mount
 
 end

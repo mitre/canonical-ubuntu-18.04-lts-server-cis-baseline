@@ -69,4 +69,30 @@ for them and then be restarted.
   tag cis_level: 1
   tag cis_controls: ["14.6", "Rev_7"]
   tag cis_rid: "1.7.1.3"
+
+  describe service('apparmor') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
+
+
+  num_loaded_profiles = inspec.command('apparmor_status | grep "profiles are loaded." | cut -f 1 -d " "').stdout.to_i
+  num_enforced_profiles = inspec.command('apparmor_status | grep "profiles are in enforce mode." | cut -f 1 -d " "').stdout.to_i
+  num_complain_profiles = inspec.command('apparmor_status | grep "profiles are in complain mode." | cut -f 1 -d " "').stdout.to_i
+  num_enforced_and_complain_profiles = num_enforced_profiles + num_complain_profiles
+
+  describe "AppArmor profiles #{num_loaded_profiles} are loaded" do
+    it "and in either enforce (found: #{num_enforced_profiles}) or complain mode (found: #{num_complain_profiles})" do
+      expect(num_enforced_and_complain_profiles).to eq(num_loaded_profiles)
+    end
+  end
+
+  num_unconfigured_but_defined= inspec.command('apparmor_status | grep "are unconfined but have a profile defined." | cut -f 1 -d " "').stdout.to_i
+  describe "#{num_unconfigured_but_defined} AppArmor Processes" do
+    it "have profiles defined, but are unconfigured" do
+      expect(num_unconfigured_but_defined).to eq(0)
+    end
+  end
+  # are unconfined but have a profile defined.
 end
