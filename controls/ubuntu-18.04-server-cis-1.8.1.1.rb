@@ -31,9 +31,7 @@ logged in."
     Run the following command and verify no results are returned:
 
     ```
-    # grep -E -i -s \"(\\\\\\v|\\\\\
-|\\\\\\m|\\\\\\s|$(grep '^ID=' /etc/os-release | cut -d= -f2 | sed -e
-'s/\"//g'))\" /etc/motd
+    # grep -E -i -s \"(\\\\\\v|\\\\\|\\\\\\m|\\\\\\s|$(grep '^ID=' /etc/os-release | cut -d= -f2 | sed -e's/\"//g'))\" /etc/motd
     ```
   "
   desc "fix", "
@@ -63,4 +61,9 @@ site policy, remove any instances of `\\m` , `\
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.8.1.1"
+
+  describe command("grep '/etc/os-release' /etc/motd").stdout.strip.split("\n") do
+    its('length') { should be < 1 }
+  end
+
 end

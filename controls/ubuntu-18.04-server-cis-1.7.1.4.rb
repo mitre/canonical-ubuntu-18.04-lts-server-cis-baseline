@@ -64,4 +64,22 @@ for them and then be restarted.
   tag cis_level: 2
   tag cis_controls: ["14.6", "Rev_7"]
   tag cis_rid: "1.7.1.4"
+
+  num_loaded_profiles = inspec.command('apparmor_status | grep "profiles are loaded." | cut -f 1 -d " "').stdout.to_i
+  num_enforced_profiles = inspec.command('apparmor_status | grep "profiles are in enforce mode." | cut -f 1 -d " "').stdout.to_i
+  num_complain_profiles = inspec.command('apparmor_status | grep "profiles are in complain mode." | cut -f 1 -d " "').stdout.to_i
+  num_enforced_and_complain_profiles = num_enforced_profiles + num_complain_profiles
+
+  describe "AppArmor profiles #{num_loaded_profiles} are loaded" do
+    it "and in enforce (found: #{num_enforced_profiles}) and none are in complain mode (found: #{num_complain_profiles})" do
+      expect(num_loaded_profiles).to eq(num_enforced_profiles)
+    end
+  end
+
+  num_unconfigured_but_defined= inspec.command('apparmor_status | grep "are unconfined but have a profile defined." | cut -f 1 -d " "').stdout.to_i
+  describe "#{num_unconfigured_but_defined} AppArmor Processes" do
+    it "have profiles defined, but are unconfigured" do
+      expect(num_unconfigured_but_defined).to eq(0)
+    end
+  end
 end
