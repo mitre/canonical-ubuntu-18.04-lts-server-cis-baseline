@@ -40,4 +40,12 @@ misleading information."
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.8.1.4"
+
+  describe file('/etc/motd') do
+    it { should exist }
+    it { should be_owned_by 'root' }
+    it { should_not be_more_permissive_than('0644') }
+  end
+
 end
+

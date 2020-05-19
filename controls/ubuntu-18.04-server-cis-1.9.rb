@@ -48,4 +48,9 @@ policy guidance on applying updates and patches:
   tag cis_level: 1
   tag cis_controls: ["3.4", "3.5", "Rev_7"]
   tag cis_rid: "1.9"
+
+  describe command('apt -s upgrade') do
+    its('exit_status') { should cmp 0 }
+    its('stdout') { should match '^0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.$' }
+  end
 end

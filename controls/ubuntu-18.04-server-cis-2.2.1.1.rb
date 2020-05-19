@@ -71,4 +71,24 @@ synchronization.
   tag cis_level: 1
   tag cis_controls: ["6.1", "Rev_7"]
   tag cis_rid: "2.2.1.1"
+
+  describe.one do
+    describe service('systemd-timesyncd') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
+    describe service('chrony') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
+    describe service('ntp') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
+  end
+
 end
+

@@ -32,4 +32,9 @@ recommended that the daemon be removed."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.1.2"
+
+  describe package("openbsd-inetd") do
+    it { should_not be_installed }
+  end
+
 end

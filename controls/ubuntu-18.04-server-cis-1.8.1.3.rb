@@ -58,4 +58,29 @@ reported.\" > /etc/issue.net
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "1.8.1.3"
+
+  banner_message_text_cli = input('banner_message_text_cli')
+  banner_message_text_cli_limited = input('banner_message_text_cli_limited')
+
+  clean_banner = banner_message_text_cli.gsub(%r{[\r\n\s]}, '')
+  clean_banner_limited = banner_message_text_cli_limited.gsub(%r{[\r\n\s]}, '')
+  banner_file = file("/etc/issue")
+  banner_missing = !banner_file.exist?
+
+  describe "The banner text is not set because /etc/issue does not exist" do
+    subject { banner_missing }
+    it { should be false }
+  end if banner_missing
+
+  banner_message = banner_file.content.gsub(%r{[\r\n\s]}, '')
+  describe.one do
+    describe "The banner text should match the standard banner" do
+      subject { banner_message }
+      it { should cmp clean_banner }
+    end
+    describe "The banner text should match the limited banner" do
+      subject { banner_message }
+      it{should cmp clean_banner_limited }
+    end
+  end if !banner_missing
 end
