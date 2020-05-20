@@ -97,4 +97,58 @@ following files as appropriate for your distribution:
   tag cis_level: 1
   tag cis_controls: ["6.1", "Rev_7"]
   tag cis_rid: "2.2.1.4"
+
+  #its('server') { should_not eq nil } || its('pool') { should_not eq nil }
+
+  if package('ntp').installed?
+    describe service('ntp') do
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    describe processes('ntpd') do
+      it { should exist }
+      its('users') { should include 'ntp'}
+    end
+
+    ntp_conf.restrict.each do |res|
+      describe res do
+        next unless res.include?('-4')
+        it { should include 'default'}
+        it { should include 'kod'}
+        it { should include 'nomodify'}
+        it { should include 'notrap'}
+        it { should include 'nopeer'}
+        it { should include 'noquery'}
+      end
+    end
+
+    ntp_conf.restrict.each do |res|
+      describe res do
+        next unless res.include?('-6')
+        it { should include 'default'}
+        it { should include 'kod'}
+        it { should include 'nomodify'}
+        it { should include 'notrap'}
+        it { should include 'nopeer'}
+        it { should include 'noquery'}
+      end
+    end
+
+    describe.one do
+      describe ntp_conf('/etc/ntp.conf') do
+        its('server') { should_not eq nil }
+      end
+      describe ntp_conf('/etc/ntp.conf') do
+        its('pool') { should_not eq nil }
+      end
+    end
+
+  else
+    impact 0.0
+    describe "The NTP package is not installed" do
+      skip "The NTP package is not installed, this control is Not Applicable."
+    end
+  end
 end
+

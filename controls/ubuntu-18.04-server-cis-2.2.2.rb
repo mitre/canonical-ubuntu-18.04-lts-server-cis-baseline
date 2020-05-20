@@ -34,4 +34,14 @@ login access via X Windows, remove it to reduce the potential attack surface."
   tag cis_level: 1
   tag cis_controls: ["2.6", "Rev_7"]
   tag cis_rid: "2.2.2"
+
+  describe package('xserver-xorg') do
+    it { should_not be_installed }
+  end
+
+  describe package('xserver-xorg-core') do
+    it { should_not be_installed }
+  end
+
+
 end

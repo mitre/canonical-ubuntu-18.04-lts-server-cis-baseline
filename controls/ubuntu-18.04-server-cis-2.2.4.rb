@@ -39,4 +39,17 @@ potential attack surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.4"
+
+  if package('cups').installed?
+    describe service('cups') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+  else
+    impact 0.0
+    describe "The Common Unix Print System (CUPS) package is not installed" do
+      skip "The Common Unix Print System (CUPS) package is not installed, this control is Not Applicable."
+    end
+  end
+
 end

@@ -47,4 +47,32 @@ attack surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.5"
+
+  if package('wide-dhcpv6-server').installed? || package('kea-dhcp4-server').installed? || package('isc-dhcp-server').installed?
+    if package('wide-dhcpv6-server').installed?
+    describe service('wide-dhcpv6-server') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    end
+    if package('kea-dhcp4-server').installed?
+    describe service('kea-dhcp4-server') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    end
+    if package('isc-dhcp-server').installed?
+      describe service('isc-dhcp-server') do
+        it { should_not be_enabled }
+        it { should_not be_running }
+      end
+    end
+  else
+    impact 0.0
+    describe "A DHCP Server package is not installed" do
+      skip "A DHCP Server package is not installed, this control is Not Applicable."
+    end
+  end
+
 end
+

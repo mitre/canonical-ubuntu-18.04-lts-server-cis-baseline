@@ -41,4 +41,17 @@ reduce the potential attack surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.3"
+
+  if package('avahi-daemon').installed?
+    describe service('avahi-daemon') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+  else
+    impact 0.0
+    describe "The Avahi Server package is not installed" do
+      skip "The Avahi Server package is not installed, this control is Not Applicable."
+    end
+  end
+
 end
