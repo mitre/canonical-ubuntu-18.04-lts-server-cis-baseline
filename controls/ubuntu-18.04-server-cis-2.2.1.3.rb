@@ -60,24 +60,17 @@ stored in `/etc/init.d` or `/etc/systemd`.
       it { should be_running }
     end
 
-    grep -E "^(server|pool)" /etc/chrony/chrony.conf
-    ps -ef | grep chronyd|grep -v grep
+    Number_Of_Servers_Configured_in_Chrony = command('grep -E "^(server|pool)" /etc/chrony/chrony.conf| wc -l').stdout.strip.split
 
-    describe service('chrony') do
-      its('startname') { should eq 'chrony' }
+    describe Number_Of_Servers_Configured_in_Chrony do
+      its('length') { should be > 0 }
     end
 
-    describe service('chrony').params do
-      its('startname') { should eq 'chrony' }
+    describe processes('chronyd') do
+      it { should exist }
+      its('users') { should include '_chrony'}
     end
 
-    describe service('chrony').startname do
-      it { should eq 'chrony' }
-    end
-
-    #describe command("sudo -u #{dconf_user} dconf read /org/gnome/login-screen/enable-smartcard-authentication") do
-    #  its('stdout.strip') { should eq multifactor_enabled.to_s }
-    #end
   else
     impact 0.0
     describe "The chrony package is not installed" do
@@ -86,3 +79,4 @@ stored in `/etc/init.d` or `/etc/systemd`.
   end
 
 end
+
