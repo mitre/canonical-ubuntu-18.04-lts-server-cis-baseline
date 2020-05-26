@@ -36,4 +36,20 @@ surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.10"
+
+  if package('apache2').installed? || package('nginx').installed?
+    describe service('apache2') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    describe service('nginx') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+  else
+    impact 0.0
+    describe "An HTTP Server package is not installed" do
+      skip "An HTTP Server package is not installed."
+    end
+  end
 end

@@ -36,4 +36,8 @@ needed information:
   tag cis_level: 1
   tag cis_controls: ["4.5", "Rev_7"]
   tag cis_rid: "2.3.2"
+
+  describe package('rsh-client') do
+    it { should_not be_installed }
+  end
 end

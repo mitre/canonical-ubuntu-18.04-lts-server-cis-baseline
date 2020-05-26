@@ -41,4 +41,9 @@ service be disabled and other, more secure services be used"
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.17"
+
+  describe service('nis') do
+    it { should_not be_enabled }
+    it { should_not be_running }
+  end
 end

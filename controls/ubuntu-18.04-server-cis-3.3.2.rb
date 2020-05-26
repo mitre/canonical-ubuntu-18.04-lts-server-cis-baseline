@@ -1,4 +1,12 @@
-# encoding: UTF-8
+TOMCAT_REALMS_LIST= attribute(
+    'tomcat_realms_list',
+    description: 'A list of Realms that should not be enabled',
+    default: ['org.apache.catalina.realm.MemoryRealm',
+              'org.apache.catalina.realm.JDBCRealm',
+              'org.apache.catalina.realm.UserDatabaseRealm',
+              'org.apache.catalina.realm.JAASRealm']
+)
+
 
 control "C-3.3.2" do
   title "Ensure /etc/hosts.allow is configured"
@@ -37,4 +45,16 @@ to this system.
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.3.2"
+
+  if file('/etc/hosts.allow').exist?
+    my_hosts_allow = command('cat /etc/hosts.allow').stdout.strip
+    describe "Contents of /etc/hosts.allow shall be evaluated manually " do
+      skip " Contents of /etc/hosts.allow shall be evaluated manually.\n #{my_hosts_allow} "
+    end
+  else
+    describe file('/etc/hosts.allow') do
+      it { should exist }
+    end
+  end
+
 end

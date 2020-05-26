@@ -47,4 +47,10 @@ attack surface."
   tag cis_level: 2
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "3.4.2"
+
+  describe kernel_module('sctp') do
+    it { should_not be_loaded }
+    it { should_not be_disabled }
+    it { should_not be_blacklisted }
+  end
 end

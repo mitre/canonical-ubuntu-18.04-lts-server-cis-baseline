@@ -72,4 +72,14 @@ file:
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "3.2.9"
+
+  describe kernel_parameter('net.ipv6.conf.all.accept_ra') do
+    its('value') { should cmp '0' }
+  end
+
+  describe kernel_parameter('net.ipv6.conf.default.accept_ra') do
+    its('value') { should cmp '0' }
+  end
+
 end
+

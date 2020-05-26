@@ -35,4 +35,8 @@ provide the needed information:
   tag cis_level: 1
   tag cis_controls: ["2.6", "Rev_7"]
   tag cis_rid: "2.3.5"
+
+  describe package('ldap-utils') do
+    it { should_not be_installed }
+  end
 end

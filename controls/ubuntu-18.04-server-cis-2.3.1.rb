@@ -38,4 +38,8 @@ needed information:
   tag cis_level: 1
   tag cis_controls: ["2.6", "Rev_7"]
   tag cis_rid: "2.3.1"
+
+  describe package('nis') do
+    it { should_not be_installed }
+  end
 end

@@ -63,4 +63,9 @@ file:
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "3.2.8"
+
+  describe kernel_parameter('net.ipv4.tcp_syncookies') do
+    its('value') { should cmp '1' }
+  end
+
 end

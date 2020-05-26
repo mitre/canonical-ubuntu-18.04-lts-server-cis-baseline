@@ -38,4 +38,26 @@ potential attack surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.8"
+
+  if package('pdns-server').installed? || package('maradns').installed? || package('bind9').installed?
+      describe service('pdns') do
+        it { should_not be_enabled }
+        it { should_not be_running }
+      end
+      describe service('maradns') do
+        it { should_not be_enabled }
+        it { should_not be_running }
+      end
+      describe service('bind9') do
+        it { should_not be_enabled }
+        it { should_not be_running }
+      end
+  else
+    impact 0.0
+    describe "A DNS Server package is not installed" do
+      skip "A DNS Server package is not installed."
+    end
+  end
 end
+
+

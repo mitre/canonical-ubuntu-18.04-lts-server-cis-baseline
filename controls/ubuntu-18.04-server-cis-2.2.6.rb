@@ -38,4 +38,16 @@ surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.6"
+
+  if package('slapd').installed?
+    describe service('isc-dhcp-server') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+  else
+    impact 0.0
+    describe "The Lightweight Directory Access Protocol (LDAP) Server package is not installed" do
+      skip "The Lightweight Directory Access Protocol (LDAP) Server package is not installed, this control is Not Applicable."
+    end
+  end
 end

@@ -39,4 +39,32 @@ deleted to reduce the potential attack surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.9"
+
+  if package('vsftpd').installed? || package('ftpd').installed? || package('gesftpserver').installed? || package('pure-ftpd').installed? || package('proftpd-basic').installed?
+    describe service('vsftpd') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    describe service('pure-ftpd') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    describe service('proftpd') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    describe package('ftpd') do
+      it { should_not be_installed}
+    end
+    describe package('gesftpserver') do
+      it { should_not be_installed}
+    end
+  else
+    impact 0.0
+    describe "An FTP Server package is not installed" do
+      skip "An FTP Server package is not installed."
+    end
+  end
 end
+
+

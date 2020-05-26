@@ -78,4 +78,13 @@ file:
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "3.2.7"
+
+  describe kernel_parameter('net.ipv4.conf.all.rp_filter') do
+    its('value') { should cmp '1' }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.rp_filter') do
+    its('value') { should cmp '1' }
+  end
+
 end

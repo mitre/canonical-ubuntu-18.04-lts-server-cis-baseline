@@ -38,4 +38,10 @@ malicious actions."
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "3.3.4"
+
+  describe file('/etc/hosts.allow') do
+    it { should be_owned_by 'root' }
+    it { should_not be_more_permissive_than('0644') }
+    it { should be_more_permissive_than('0000') }
+  end
 end

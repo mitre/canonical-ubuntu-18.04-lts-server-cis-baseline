@@ -65,4 +65,13 @@ file:
   tag cis_level: 1
   tag cis_controls: ["6.2", "6.3", "Rev_7"]
   tag cis_rid: "3.2.4"
+
+  describe kernel_parameter('net.ipv4.conf.all.log_martians') do
+    its('value') { should cmp '1' }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.log_martians') do
+    its('value') { should cmp '1' }
+  end
+
 end

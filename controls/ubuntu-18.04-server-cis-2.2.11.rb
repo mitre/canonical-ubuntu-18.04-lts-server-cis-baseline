@@ -37,4 +37,24 @@ potential attack surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.11"
+
+  if package('dovecot-core').installed? || package('sendmail').installed? || package('postfix').installed?
+    describe service('dovecot') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    describe service('sendmail') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+    describe service('postfix') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+  else
+    impact 0.0
+    describe "An Email Server package is not installed" do
+      skip "An Email Server package is not installed."
+    end
+  end
 end

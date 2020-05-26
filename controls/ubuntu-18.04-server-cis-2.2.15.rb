@@ -47,4 +47,16 @@ MAIL section. If the line already exists, change it to look like the line below:
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.15"
+
+  describe.one do
+    describe port(25) do
+      it { should be_listening }
+      its('protocols') { should include 'tcp' }
+      its('addresses') { should include '127.0.0.1' }
+    end
+    describe port(25) do
+      it { should_not be_listening }
+    end
+  end
 end
+

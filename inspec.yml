@@ -68,4 +68,15 @@ inputs:
   - name: banner_message_text_cli_limited
     description: Banner message text for resource-limited command line interface logins.
     type: String
-    value: "I've read & consent to terms in IS user agreem't.
+    value: "I've read & consent to terms in IS user agreem't."
+
+  - name: non_interactive_shells
+    description: These shells do not allow a user to login
+    type: Array
+    value:
+      - "/sbin/nologin"
+      - "/sbin/halt"
+      - "/sbin/shutdown"
+      - "/bin/false"
+      - "/bin/sync"
+      - "/bin/true"

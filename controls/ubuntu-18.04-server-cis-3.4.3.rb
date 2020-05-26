@@ -45,4 +45,10 @@ attack surface."
   tag cis_level: 2
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "3.4.3"
+
+  describe kernel_module('rds') do
+    it { should_not be_loaded }
+    it { should_not be_disabled }
+    it { should_not be_blacklisted }
+  end
 end

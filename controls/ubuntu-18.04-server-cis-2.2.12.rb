@@ -40,4 +40,16 @@ attack surface."
   tag cis_level: 1
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "2.2.12"
+
+  if package('samba').installed?
+    describe service('smbd') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
+  else
+    impact 0.0
+    describe "The Samba Server package is not installed" do
+      skip "The Samba Server package is not installed."
+    end
+  end
 end

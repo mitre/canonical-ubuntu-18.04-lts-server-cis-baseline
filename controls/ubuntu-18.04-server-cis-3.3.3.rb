@@ -35,4 +35,16 @@ file:
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.3.3"
+
+  if file('/etc/hosts.deny').exist?
+    my_hosts_deny = command('cat /etc/hosts.allow').stdout.strip
+    describe "Contents of /etc/hosts.deny shall be evaluated manually " do
+      skip " Contents of /etc/hosts.deny shall be evaluated manually.\n #{my_hosts_deny} "
+    end
+  else
+    describe file('/etc/hosts.deny') do
+      it { should exist }
+    end
+  end
+
 end
