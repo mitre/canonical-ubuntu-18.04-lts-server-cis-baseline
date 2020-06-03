@@ -69,4 +69,16 @@ follows local site policy:
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.1.1"
+
+  describe.one do
+    describe package('ufw') do
+      it { should be_installed }
+    end
+    describe package('nftables') do
+      it { should be_installed }
+    end
+    describe package('iptables') do
+      it { should be_installed }
+    end
+  end
 end

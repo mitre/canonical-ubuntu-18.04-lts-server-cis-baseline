@@ -43,4 +43,19 @@ acceptable usage than to black list unacceptable usage."
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.2.2"
+
+  ufw_status = command('ufw status').stdout.strip.lines.first
+  value = ufw_status.split(':')[1].strip
+
+  describe 'UFW status' do
+    subject { value }
+    it { should cmp 'active' }
+  end
+
+  describe service('ufw') do
+    it { should be_running }
+    it { should be_enabled }
+  end
+
 end
+

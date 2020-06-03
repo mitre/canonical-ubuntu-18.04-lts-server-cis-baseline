@@ -57,4 +57,16 @@ order:
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.2.3"
+
+  ufw_status = command('ufw status verbose').stdout.strip.split
+
+  describe ufw_status do
+    it { should include 'Anywhere on lo             ALLOW IN    Anywhere' }
+  end
+
+  describe service('ufw') do
+    it { should be_running }
+    it { should be_enabled }
+  end
+
 end
