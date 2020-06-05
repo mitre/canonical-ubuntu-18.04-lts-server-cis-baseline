@@ -53,4 +53,23 @@ simplicity flush out all iptables rules, and ensure it is not loaded"
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.3.1"
+
+  iptables_rules = ["-P INPUT ACCEPT", "-P FORWARD ACCEPT", "-P OUTPUT ACCEPT"]
+
+  describe service('iptables') do
+    it { should_not be_enabled }
+    it { should_not be_running }
+  end
+
+  describe  "IPTables rules shall be flushed and only default " do
+    iptables.retrieve_rules.each do |rule|
+      subject { rule }
+      it { should be_in iptables_rules }
+    end
+  end
+
+  describe "IPTables is running" do
+    subject { service('iptables').running? }
+    it { should_not eq true }
+  end
 end

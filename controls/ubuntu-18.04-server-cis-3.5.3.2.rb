@@ -47,4 +47,20 @@ being build, nftables will not filter network traffic."
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.3.2"
+
+  nft_tables = command('nft list tables').stdout.strip
+
+  if service('nftables').running? && service('nftables').enabled?
+    describe "File '#{nft_tables}' \n Manually verification required.\n verify that a nftables table exists." do
+      skip "File '#{nft_tables}' \n Manually verification required.\n Aerify that a nftables table exists."
+    end
+  else
+    describe service('nftables') do
+      it { should be_running }
+      it { should be_enabled }
+    end
+  end
 end
+
+
+

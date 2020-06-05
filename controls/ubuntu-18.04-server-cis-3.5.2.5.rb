@@ -73,4 +73,20 @@ establish a proper rule for accepting inbound connections:
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.2.5"
+
+
+  ufw_status = command('ss -4tuln && echo && echo && ufw status').stdout.strip
+
+  if service('ufw').running? && service('ufw').enabled?
+    describe "File '#{ufw_status}' \n Manually verification required.\nVAny ports that have been opened on non-loopback addresses need
+firewall rules to govern traffic." do
+      skip "File '#{ufw_status}' \n Manually verification required.\nAny ports that have been opened on non-loopback addresses need
+firewall rules to govern traffic."
+    end
+  else
+    describe service('ufw') do
+      it { should be_running }
+      it { should be_enabled }
+    end
+  end
 end

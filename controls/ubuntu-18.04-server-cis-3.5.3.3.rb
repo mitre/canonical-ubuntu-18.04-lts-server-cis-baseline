@@ -65,4 +65,19 @@ touched by nftables."
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.3.3"
+
+  nft_tables = command('nft list ruleset').stdout.strip.split(/[\n|;]/)
+
+  if service('nftables').running? && service('nftables').enabled?
+    describe nft_tables do
+      it { should match '\s+type\s+filter\s+hook\s+input\s+priority\s+0' }
+      it { should match 'type filter hook forward priority 0' }
+      it { should match 'type filter hook output priority 0' }
+    end
+  else
+    describe service('nftables') do
+      it { should be_running }
+      it { should be_enabled }
+    end
+  end
 end

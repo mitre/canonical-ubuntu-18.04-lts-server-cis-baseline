@@ -58,10 +58,16 @@ order:
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.2.3"
 
-  ufw_status = command('ufw status verbose').stdout.strip.split
+  ufw_status = command('ufw status verbose').stdout.strip
+  #ufw_status = command('ufw status verbose').stdout.strip.split("\n")
 
   describe ufw_status do
-    it { should include 'Anywhere on lo             ALLOW IN    Anywhere' }
+    it { should match 'Anywhere on lo             ALLOW IN    Anywhere' }
+    it { should match 'Anywhere\s+DENY\s+IN\s+127.0.0.0/8' }
+    it { should match 'Anywhere\s+\(v6\)\s+on\s+lo\s+ALLOW\s+IN\s+Anywhere\s+\(v6\)' }
+    it { should match 'Anywhere\s+\(v6\)\s+DENY\s+IN\s+::1' }
+    it { should match 'Anywhere\s+ALLOW\s+OUT\s+Anywhere\s+on\s+lo' }
+    it { should match 'Anywhere\s+\(v6\)\s+ALLOW\s+OUT\s+Anywhere\s+\(v6\)\s+on\s+lo' }
   end
 
   describe service('ufw') do

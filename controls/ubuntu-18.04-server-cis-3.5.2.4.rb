@@ -33,4 +33,20 @@ implement a policy to allow all outbound connections on all interfaces:
   tag cis_level: 1
   tag cis_controls: ["9.4", "Rev_7"]
   tag cis_rid: "3.5.2.4"
+
+  ufw_status = command('ufw status numbered').stdout.strip
+
+  if service('ufw').running? && service('ufw').enabled?
+    describe "File '#{ufw_status}' \n Manually verification required.\nVerify all rules for new outbound connections
+match site policy" do
+      skip "File '#{ufw_status}' \n Manually verification required.\nVerify all rules for new outbound connections
+match site policy"
+    end
+  else
+    describe service('ufw') do
+      it { should be_running }
+      it { should be_enabled }
+    end
+  end
 end
+
