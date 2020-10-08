@@ -6,6 +6,7 @@ copyright_email:
 license: Apache-2.0
 summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Centers of Medicare and Medicaid (CMS) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53, Center for Internet Security (CIS) Ubuntu Linux 18.04 LTS Benchmark version 2.0.1 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: ."
 version: 0.1.0
+inspec_version: ">= 4.0"
 
 supports:
   - platform-name: ubuntu
