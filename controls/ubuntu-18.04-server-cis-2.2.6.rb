@@ -40,7 +40,7 @@ surface."
   tag cis_rid: "2.2.6"
 
   if package('slapd').installed?
-    describe service('isc-dhcp-server') do
+    describe service('slapd') do
       it { should_not be_enabled }
       it { should_not be_running }
     end
