@@ -40,4 +40,10 @@ from unauthorized changes by non-privileged users."
   tag cis_level: 1
   tag cis_controls: ["14.6", "Rev_7"]
   tag cis_rid: "5.2.1"
+  describe file('/etc/ssh/sshd_config') do
+    it { should be_file }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+    its('mode') { should cmp '00600' }
+  end
 end

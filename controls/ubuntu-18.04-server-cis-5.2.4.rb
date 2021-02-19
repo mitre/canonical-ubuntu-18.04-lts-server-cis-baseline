@@ -35,4 +35,7 @@ v2."
   tag cis_level: 1
   tag cis_controls: ["14.4", "4.5", "Rev_7"]
   tag cis_rid: "5.2.4"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } ) do
+    its('Protocol') { should cmp 2 }
+  end
 end

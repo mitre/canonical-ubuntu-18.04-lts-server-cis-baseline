@@ -36,4 +36,7 @@ provides a clear audit trail in the event of a security incident"
   tag cis_level: 1
   tag cis_controls: ["4.3", "Rev_7"]
   tag cis_rid: "5.2.10"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } ) do
+    its('PermitRootLogin') { should cmp 'no' }
+  end
 end

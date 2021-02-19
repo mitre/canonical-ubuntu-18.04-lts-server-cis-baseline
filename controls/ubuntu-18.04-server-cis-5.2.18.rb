@@ -99,4 +99,19 @@ follows:
   tag cis_level: 1
   tag cis_controls: ["4.3", "Rev_7"]
   tag cis_rid: "5.2.18"
+
+  describe.one do
+    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
+      its('AllowUsers') { should be }
+    end
+    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
+      its('AllowGroups') { should be }
+    end
+    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
+      its('DenyUsers') { should be }
+    end
+    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
+      its('DenyGroups') { should be }
+    end
+  end
 end

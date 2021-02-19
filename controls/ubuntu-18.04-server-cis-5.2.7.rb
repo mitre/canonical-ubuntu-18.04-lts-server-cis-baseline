@@ -38,4 +38,7 @@ less:
   tag cis_level: 1
   tag cis_controls: ["16.13", "Rev_7"]
   tag cis_rid: "5.2.7"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(\d*?)\s*$/ } ) do
+    its('MaxAuthTries') { should cmp <= 4 }
+  end
 end
