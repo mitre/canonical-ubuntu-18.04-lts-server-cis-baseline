@@ -53,7 +53,7 @@ introduce malware."
   tag cis_controls: ["8.4", "8.5", "Rev_7"]
   tag cis_rid: "1.1.23"
 
-  describe kernel_module('usb-storage') do
+  describe kernel_module('usb_storage') do
     it { should_not be_loaded }
     it { should be_disabled }
   end
