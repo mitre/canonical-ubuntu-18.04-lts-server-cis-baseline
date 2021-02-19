@@ -39,4 +39,7 @@ disallow access to the server"
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "5.2.20"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } ) do
+    its('UsePAM') { should cmp 'yes' }
+  end
 end

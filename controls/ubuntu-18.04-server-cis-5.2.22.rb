@@ -37,4 +37,7 @@ overwhelming the daemon."
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "5.2.22"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } ) do
+    its('MaxStartups') { should cmp '10:30:60' }
+  end
 end

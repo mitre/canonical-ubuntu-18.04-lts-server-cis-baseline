@@ -81,4 +81,19 @@ chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes2
   tag cis_level: 1
   tag cis_controls: ["14.4", "Rev_7"]
   tag cis_rid: "5.2.13"
+  cfg = parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } )
+  describe cfg do
+    its('Ciphers') { should be }
+    its('Ciphers') { should_not include(
+      '3des-cbc',
+      'aes128-cbc',
+      'aes192-cbc',
+      'aes256-cbc',
+      'arcfour',
+      'arcfour128',
+      'arcfour256',
+      'blowfish-cbc',
+      'cast128-cbc',
+      'rijndael-cbc@lysator.liu.se') }
+  end
 end

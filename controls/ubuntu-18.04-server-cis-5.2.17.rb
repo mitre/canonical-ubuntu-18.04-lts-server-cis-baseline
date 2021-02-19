@@ -41,4 +41,8 @@ between 1 and 60:
   tag cis_level: 1
   tag cis_controls: ["5.1", "Rev_7"]
   tag cis_rid: "5.2.17"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(\d*?)\s*$/ } ) do
+    its('LoginGraceTime') { should cmp >= 1 }
+    its('LoginGraceTime') { should cmp <= 60 }
+  end
 end

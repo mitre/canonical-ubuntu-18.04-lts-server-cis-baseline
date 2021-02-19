@@ -66,4 +66,14 @@ SSH host key files
   tag cis_level: 1
   tag cis_controls: ["14.6", "Rev_7"]
   tag cis_rid: "5.2.2"
+  if (File.exist?('/etc/ssh'))
+    Array(Dir["/etc/ssh/ssh_host_*_key"]).each do |key_file|
+      describe file(key_file) do
+        it { should be_file }
+        it { should be_owned_by 'root' }
+        it { should be_grouped_into 'root' }
+        its('mode') { should cmp '00600' }
+      end
+    end
+  end
 end

@@ -60,4 +60,9 @@ site policy:
   tag cis_level: 1
   tag cis_controls: ["16.11", "Rev_7"]
   tag cis_rid: "5.2.16"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(\d*?)\s*$/ } ) do
+    its('ClientAliveInterval') { should cmp >= 1 }
+    its('ClientAliveInterval') { should cmp <= 300 }
+    its('ClientAliveCountMax') { should cmp <= 3 }
+  end
 end

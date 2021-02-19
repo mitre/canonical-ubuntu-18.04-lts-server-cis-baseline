@@ -34,4 +34,7 @@ empty password reduces the probability of unauthorized access to the system"
   tag cis_level: 1
   tag cis_controls: ["16.3", "Rev_7"]
   tag cis_rid: "5.2.11"
+  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } ) do
+    its('PermitEmptyPasswords') { should cmp 'no' }
+  end
 end
