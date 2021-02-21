@@ -48,9 +48,9 @@ introduce malware."
   tag stig_id: nil
   tag fix_id: nil
   tag cci: nil
-  tag nist: ["SI-3", "SC-18(4)", "Rev_4"]
+  tag nist: ["SI-3", "SC-18(4)"]
   tag cis_level: 1
-  tag cis_controls: ["8.4", "8.5", "Rev_7"]
+  tag cis_controls: ["8.4", "8.5"]
   tag cis_rid: "1.1.23"
 
   describe kernel_module('usb_storage') do
