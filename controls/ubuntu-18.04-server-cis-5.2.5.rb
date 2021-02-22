@@ -47,12 +47,6 @@ difficult to identify important security information."
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
   tag nist: ["AU-12", "AU-3", "Rev_4"]
   tag cis_level: 1
   tag cis_controls: ["6.2", "6.3", "Rev_7"]

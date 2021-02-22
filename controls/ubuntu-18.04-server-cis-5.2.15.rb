@@ -39,12 +39,6 @@ curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,dif
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
   tag nist: ["SC-8", "Rev_4"]
   tag cis_level: 1
   tag cis_controls: ["14.4", "Rev_7"]
