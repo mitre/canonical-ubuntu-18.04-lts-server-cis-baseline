@@ -71,12 +71,6 @@ chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes2
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
   tag nist: ["SC-8", "Rev_4"]
   tag cis_level: 1
   tag cis_controls: ["14.4", "Rev_7"]

@@ -24,12 +24,6 @@ empty password reduces the probability of unauthorized access to the system"
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
   tag nist: ["IA-2 (1)", "Rev_4"]
   tag cis_level: 1
   tag cis_controls: ["16.3", "Rev_7"]
