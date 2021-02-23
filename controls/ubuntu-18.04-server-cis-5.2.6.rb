@@ -31,6 +31,9 @@ forwarding is disabled, users can always install their own forwarders."
   tag cis_level: 2
   tag cis_controls: ["9.2", "Rev_7"]
   tag cis_rid: "5.2.6"
+  tag cis_scored: true
+  tag cis_version: 2.0.1
+  tag cis_cdc_version: 7
   describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } ) do
     its('X11Forwarding') { should cmp 'no' }
   end
