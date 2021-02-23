@@ -28,9 +28,9 @@ less:
   "
   impact 0.5
   tag severity: "medium"
-  tag nist: ["AC-2(12)", "Rev_4"]
+  tag nist: ["AC-2(12)"]
   tag cis_level: 1
-  tag cis_controls: ["16.13", "Rev_7"]
+  tag cis_controls: ["16.13"]
   tag cis_rid: "5.2.7"
   tag cis_scored: true
   tag cis_version: 2.0.1
