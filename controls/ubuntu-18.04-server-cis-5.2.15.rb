@@ -43,6 +43,9 @@ curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,dif
   tag cis_level: 1
   tag cis_controls: ["14.4", "Rev_7"]
   tag cis_rid: "5.2.15"
+  tag cis_scored: true
+  tag cis_version: 2.0.1
+  tag cis_cdc_version: 7
   cfg = parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } )
   describe cfg do
     its('KexAlgorithms') { should be }

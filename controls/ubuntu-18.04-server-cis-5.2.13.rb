@@ -75,6 +75,9 @@ chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes2
   tag cis_level: 1
   tag cis_controls: ["14.4", "Rev_7"]
   tag cis_rid: "5.2.13"
+  tag cis_scored: true
+  tag cis_version: 2.0.1
+  tag cis_cdc_version: 7
   cfg = parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } )
   describe cfg do
     its('Ciphers') { should be }

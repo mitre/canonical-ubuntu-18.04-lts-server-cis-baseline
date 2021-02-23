@@ -60,6 +60,9 @@ SSH host key files
   tag cis_level: 1
   tag cis_controls: ["14.6", "Rev_7"]
   tag cis_rid: "5.2.2"
+  tag cis_scored: true
+  tag cis_version: 2.0.1
+  tag cis_cdc_version: 7
   if (File.exist?('/etc/ssh'))
     Array(Dir["/etc/ssh/ssh_host_*_key"]).each do |key_file|
       describe file(key_file) do
