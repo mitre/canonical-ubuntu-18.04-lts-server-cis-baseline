@@ -2,7 +2,12 @@
 
 InSpec profile overlay to validate the secure configuration of Canonical Ubuntu 18.04 LTS Server against the [Center for Internet Security](https://www.cisecurity.org/benchmark/ubuntu_linux/) - [CIS Ubuntu Linux 18.04 LTS Benchmark v2.0.1](https://www.cisecurity.org/benchmark/ubuntu_linux/).
 
-## Getting Started  
+InSpec is an open-source run-time framework and rule language used to specify compliance, security, and policy requirements for testing any node in your infrastructure or an infrastructure.  
+
+In addition to the InSpec profile, this repository includes hardening content using Ansible (see `spec` directory) to help `test the tests` to ensure the accuracy and precision of the validation.
+
+## Getting Started. 
+
 It is intended and recommended that InSpec and this profile overlay be run from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __ssh__.
 
 __For the best security of the runner, always install on the runner the _latest version_ of InSpec and supporting Ruby language components.__ 
@@ -22,7 +27,7 @@ There are a few long running controls that take anywhere from 3 minutes to 10 mi
 
 The input `disable_slow_controls (bool: false)` can be set to `true` or `false` as needed in a `<name_of_your_input_file>.yml` file.
 
-* list
+__***list them here if any otherwise remove this section***__
 
 ## Running This Overlay Directly from Github
 
