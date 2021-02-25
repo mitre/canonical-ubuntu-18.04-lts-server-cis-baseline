@@ -1,5 +1,9 @@
 # Example InSpec Profile
 
+## Running Test-Kitchen
+
+## Running profile as an end-user
+
 ## Review your scan results with [Heimdall-Lite](https://heimdall-lite.mitre.org)
 ### What is Heimdall-Lite?
 Heimdall-Lite is a great open-source Security Results Viewer by the [MITRE Corporation](https://www.mitre.org) for reviewing your GCP CIS Benchmark scan results.
