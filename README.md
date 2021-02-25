@@ -1,12 +1,12 @@
-# canonical-ubuntu-18.04-lts-server-cis-baseline. 
+# canonical-ubuntu-18.04-lts-server-cis-baseline
 
-InSpec profile overlay to validate the secure configuration of Canonical Ubuntu 18.04 LTS Server against the [Center for Internet Security](https://www.cisecurity.org/benchmark/ubuntu_linux/) - [CIS Ubuntu Linux 18.04 LTS Benchmark v2.0.1](https://www.cisecurity.org/benchmark/ubuntu_linux/).
+InSpec profile to validate the secure configuration of Canonical Ubuntu 18.04 LTS Server against the [Center for Internet Security](https://www.cisecurity.org/benchmark/ubuntu_linux/) - [CIS Ubuntu Linux 18.04 LTS Benchmark v2.0.1](https://www.cisecurity.org/benchmark/ubuntu_linux/).
 
 InSpec is an open-source run-time framework and rule language used to specify compliance, security, and policy requirements for testing any node in your infrastructure or an infrastructure.  
 
 In addition to the InSpec profile, this repository includes hardening content using Ansible (see `spec` directory) to help `test the tests` to ensure the accuracy and precision of the validation.
 
-## Getting Started. 
+## Getting Started
 
 It is intended and recommended that InSpec and this profile overlay be run from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __ssh__.
 
