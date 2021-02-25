@@ -1,4 +1,4 @@
-# Example InSpec Profile
+# Baseline Inspec Profile and Hardening for Canonical Ubuntu Version 18.04 Long Term Support (LTS) 
 
 ## Running Test-Kitchen
 
