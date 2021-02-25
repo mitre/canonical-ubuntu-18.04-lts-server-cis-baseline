@@ -1,5 +1,70 @@
 # Baseline Inspec Profile and Hardening for Canonical Ubuntu Version 18.04 Long Term Support (LTS) 
 
+## Description
+InSpec compliance profile is a collection of automated tests that validate secure configuration of Canonical Ubuntu Version 18.04 LTS against the CIS Benchmark version 2.0.1.
+
+InSpec is an open-source run-time framework and rule language used to specify compliance,
+security, and policy requirements for testing any node in your infrastructure or an infrastructure.
+
+In addition to the InSpec profile, this repository includes content to evaluate accuracy and precision of the validation. Providing the known "Good" and "Bad" datasets elliminates the discussion about
+suboptimal level of accuracy.
+
+## Versioning and State of Development
+This project uses the [Semantic Versioning Policy](https://semver.org/).
+
+### Branches
+The master branch contains the latest version of the software leading up to a new release. Other branches contain feature-specific updates.
+
+### Tags
+Tags indicate official releases of the project.
+Please note 0.x releases are works in progress (WIP) and may change at any time.
+
+## Requirements
+- [ruby](https://www.ruby-lang.org/en/) version 2.6 or greater
+- [InSpec](http://inspec.io/) version 4.x or greater
+- Install via ruby gem: `gem install inspec`
+
+## Usage
+InSpec makes it easy to run tests wherever you need. More options
+listed here: [InSpec cli](http://inspec.io/docs/reference/cli/)
+
+### Run with remote profile:
+You may choose to run the profile via a remote url, this has the
+advantage of always being up to date. The disadvantage is you may wish
+to modify controls, which is only possible when downloaded. Also, the
+remote profile is unintuitive for passing in attributes, which modify
+the default values of the profile.
+
+```bash
+inspec exec https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline/archive/master.tar.gz
+```
+
+Another option is to download the profile then run it, this allows
+you to edit specific instructions and view the profile code.
+
+```bash
+# Clone Inspec Profile
+$ git clone --recurse-submodules https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline.git
+
+# Run profile locally (assuming you have not changed directories since cloning)
+# This will display compliance level at the prompt, and generate a JSON file
+# for export called output.json
+$ inspec exec canonical-ubuntu-18.04-lts-server-cis-baseline --reporter cli json:output.json
+
+# Run profile with custom settings defined in inspec.yml (previously inputs.yml) against the target
+# server example.com.
+$ inspec exec canonical-ubuntu-18.04-lts-server-cis-baseline -t example.com --user root --password=Pa55w0rd --reporter cli json:output.json
+
+# Run profile with: custom attributes, ssh keyed into a custom target, and sudo.
+$ inspec exec canonical-ubuntu-18.04-lts-server-cis-baseline -t ssh://user@hostname -i /path/to/key --sudo --reporter cli json:output.json
+
+# Run profile with: custom attributes and a Docker container target.
+$ inspec exec -t docker://52a949b41213 --input-file=inputs.yml --reporter cli json:output.json
+```
+
+If you already cloned the project and forgot `--recurse-submodules`, you can combine the git submodule init and git submodule update steps by running `git submodule update --init --recursive`.
+
+
 ## Running Test-Kitchen
 
 Individually
