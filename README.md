@@ -1,5 +1,11 @@
 # Example InSpec Profile
 
+
+
+# Updates
+Update submodules
+``` git submodule update --init --recursive```
+
 ## NOTICE
 
 © 2020 The MITRE Corporation.
