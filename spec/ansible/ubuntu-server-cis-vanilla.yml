@@ -2,7 +2,7 @@
 - hosts:
     - localhost
   roles:
-    - roles/ansible-role-ubuntu-stig-vanilla
+    - roles/ansible-role-ubuntu-server-cis-vanilla
   serial: 50
   #vars:
   #  - deployment_task: configure_apps.yml% 
