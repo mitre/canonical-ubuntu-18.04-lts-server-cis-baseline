@@ -2,6 +2,25 @@
 
 ## Running Test-Kitchen
 
+Individually
+Create
+Vanilla
+``` KITCHEN_LOCAL_YAML=kitchen.vagrant.yml CHEF_LICENSE=accept kitchen create vanilla-ubuntu-1804 ```
+Hardened
+``` KITCHEN_LOCAL_YAML=kitchen.vagrant.yml CHEF_LICENSE=accept kitchen create hardened-ubuntu-1804 ```
+
+Converge
+Vanilla
+``` KITCHEN_LOCAL_YAML=kitchen.vagrant.yml CHEF_LICENSE=accept kitchen create vanilla-ubuntu-1804 ```
+Hardened
+``` KITCHEN_LOCAL_YAML=kitchen.vagrant.yml CHEF_LICENSE=accept kitchen create hardened-ubuntu-1804 ```
+
+Verify
+Vanilla
+``` KITCHEN_LOCAL_YAML=kitchen.vagrant.yml CHEF_LICENSE=accept kitchen verify vanilla-ubuntu-1804 ```
+Hardened
+``` KITCHEN_LOCAL_YAML=kitchen.vagrant.yml CHEF_LICENSE=accept kitchen verify hardened-ubuntu-1804 ```
+
 ## Running profile as an end-user
 
 ## Review your scan results with [Heimdall-Lite](https://heimdall-lite.mitre.org)

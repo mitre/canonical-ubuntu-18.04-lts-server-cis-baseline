@@ -1,7 +1,6 @@
 ---
 - hosts:
     - localhost
-  become: yes
   roles:
     - roles/ansible-role-ubuntu-server-cis-vanilla
     - roles/ansible-role-ubuntu-server-cis-hardening
