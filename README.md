@@ -1,4 +1,4 @@
-# Baseline Inspec Profile and Hardening for Canonical Ubuntu Version 18.04 Long Term Support (LTS) 
+## Baseline Inspec Profile and Hardening for Canonical Ubuntu Version 18.04 Long Term Support (LTS) 
 
 ## Description
 InSpec compliance profile is a collection of automated tests that validate secure configuration of Canonical Ubuntu Version 18.04 LTS against the CIS Benchmark version 2.0.1.
