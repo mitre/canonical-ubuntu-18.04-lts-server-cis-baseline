@@ -30,36 +30,20 @@ chmod a+t '{}'
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6", "Rev_4"]
+  tag nist: ["CM-6"]
   tag cis_level: 1
-  tag cis_controls: ["5.1", "Rev_7"]
+  tag cis_controls: ["5.1"]
   tag cis_rid: "1.1.21"
 
   command("df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type d \\( -perm -0002 -a ! -perm -1000 \\) 2>/dev/null").stdout.strip.split("\n").each do |entry|
-    describe directory(entry) do
-      its('group') { should be_in ['root','sys', 'bin'] }
-      its('group') { should_not be_in user_groups }
-    end
-  end
-
-  MyFiles = command('find / -xdev -type d -perm -0002 -exec ls -Ld {} \\;').stdout.strip.split("\n").entries
-  if MyFiles.count > 0
-    MyFiles.each do |entry|
-      describe MyFiles(entry) do
-        its('group') { should be_in %w[root sys bin] + application_groups }
+    describe.one do
+      describe directory(entry) do
+        it { should be_sticky }
+      end
+      describe directory(entry) do
+        it { should_not be_writable.by('others') }
       end
     end
-  else
-    describe 'No world-writable files found' do
-      skip 'No world-writable files found on the system'
-    end
   end
-
 
 end
