@@ -1,0 +1,9 @@
+---
+- hosts:
+    - localhost
+  roles:
+    - roles/ansible-role-ubuntu-server-cis-vanilla
+    - roles/ansible-role-ubuntu-server-cis-hardening
+  serial: 50
+  #vars:
+  #  - deployment_task: configure_apps.yml% 
