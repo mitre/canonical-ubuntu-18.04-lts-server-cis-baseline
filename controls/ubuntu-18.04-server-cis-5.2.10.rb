@@ -33,7 +33,7 @@ provides a clear audit trail in the event of a security incident"
   tag cis_scored: true
   tag cis_version: 2.0.1
   tag cis_cdc_version: 7
-  describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } ) do
+  describe sshd_config do
     its('PermitRootLogin') { should cmp 'no' }
   end
 end

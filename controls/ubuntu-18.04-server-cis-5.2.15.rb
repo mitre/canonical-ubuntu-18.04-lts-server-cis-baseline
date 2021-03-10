@@ -46,9 +46,11 @@ curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,dif
   tag cis_scored: true
   tag cis_version: 2.0.1
   tag cis_cdc_version: 7
-  cfg = parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } )
-  describe cfg do
-    its('KexAlgorithms') { should be }
+  describe sshd_config do
+    describe 'it should have defined KexAlgorithms' do
+      subject { cfg.KexAlgorithms }
+        it { should_not be_empty }
+    end
     its('KexAlgorithms') { should_not include(
       'diffie-hellman-group1-sha1',
       'diffie-hellman-group14-sha1',

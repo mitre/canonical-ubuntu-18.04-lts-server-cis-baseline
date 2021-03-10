@@ -78,9 +78,11 @@ chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes2
   tag cis_scored: true
   tag cis_version: 2.0.1
   tag cis_cdc_version: 7
-  cfg = parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s*(.*?)\s*$/ } )
-  describe cfg do
-    its('Ciphers') { should be }
+  describe sshd_config do
+    describe 'it should have defined Ciphers' do
+      subject { cfg.Ciphers }
+        it { should_not be_empty }
+    end
     its('Ciphers') { should_not include(
       '3des-cbc',
       'aes128-cbc',

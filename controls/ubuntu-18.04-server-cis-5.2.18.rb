@@ -98,17 +98,17 @@ follows:
   tag cis_cdc_version: 7
 
   describe.one do
-    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
-      its('AllowUsers') { should be }
+    describe sshd_config do
+      its('AllowUsers') { should_not be_empty }
     end
-    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
-      its('AllowGroups') { should be }
+    describe sshd_config do
+      its('AllowGroups') { should_not be_empty }
     end
-    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
-      its('DenyUsers') { should be }
+    describe sshd_config do
+      its('DenyUsers') { should_not be_empty }
     end
-    describe parse_config_file('/etc/ssh/sshd_config', { assignment_regex: /^\s*(\S*)\s+(.*?)\s*$/ } ) do
-      its('DenyGroups') { should be }
+    describe sshd_config do
+      its('DenyGroups') { should_not be_empty }
     end
   end
 end
