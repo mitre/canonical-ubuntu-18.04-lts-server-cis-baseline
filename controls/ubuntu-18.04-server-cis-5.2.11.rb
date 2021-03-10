@@ -29,7 +29,7 @@ empty password reduces the probability of unauthorized access to the system"
   tag cis_controls: ["16.3"]
   tag cis_rid: "5.2.11"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe sshd_config do
     its('PermitEmptyPasswords') { should cmp 'no' }

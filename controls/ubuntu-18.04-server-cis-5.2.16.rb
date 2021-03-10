@@ -55,7 +55,7 @@ site policy:
   tag cis_controls: ["16.11"]
   tag cis_rid: "5.2.16"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe sshd_config do
     its('ClientAliveInterval') { should cmp >= 1 }
