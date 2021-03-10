@@ -32,7 +32,7 @@ files in SSH provides an additional layer of protection."
   tag cis_controls: ["16.3"]
   tag cis_rid: "5.2.9"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe sshd_config do
     its('HostbasedAuthentication') { should cmp 'no' }

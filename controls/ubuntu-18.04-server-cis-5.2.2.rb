@@ -61,7 +61,7 @@ SSH host key files
   tag cis_controls: ["14.6"]
   tag cis_rid: "5.2.2"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   if inspec.directory('/etc/ssh').exist?
     find_command = command("find /etc/ssh -xdev -type f -name 'ssh_host_*_key'").stdout.lines
@@ -74,13 +74,11 @@ SSH host key files
           it { should_not be_more_permissive_than('0600') }
         end
       end
-    end
     else
       descibe "No 'ssh_host_*_key' files were found in '/etc/ssh'" do 
         skip "You must validate this control manually or correct your sshd config"
       end
     end
-  end
   else
     descibe "'/etc/ssh' does not seem to exist, you must check this control by hand" do
       skip '/etc/ssh did not exist, please check this control by hand'

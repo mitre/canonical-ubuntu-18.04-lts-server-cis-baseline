@@ -35,7 +35,7 @@ from unauthorized changes by non-privileged users."
   tag cis_controls: ["14.6"]
   tag cis_rid: "5.2.1"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe file('/etc/ssh/sshd_config') do
     it { should be_file }

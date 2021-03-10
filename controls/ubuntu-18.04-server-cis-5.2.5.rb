@@ -52,7 +52,7 @@ difficult to identify important security information."
   tag cis_controls: ["6.2", "6.3"]
   tag cis_rid: "5.2.5"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe sshd_config do
     its('LogLevel') { should match(/^VERBOSE|INFO$/) }

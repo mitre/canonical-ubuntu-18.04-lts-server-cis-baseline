@@ -31,7 +31,7 @@ programs)"
   tag cis_controls: ["14.6"]
   tag cis_rid: "5.2.12"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe sshd_config do
     its('PermitUserEnvironment') { should cmp 'no' }

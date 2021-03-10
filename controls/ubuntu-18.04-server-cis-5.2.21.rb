@@ -41,7 +41,7 @@ stolen data from the target network
   tag cis_controls: ["9.2"]
   tag cis_rid: "5.2.21"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe sshd_config do
     its('AllowTcpForwarding') { should cmp 'no' }

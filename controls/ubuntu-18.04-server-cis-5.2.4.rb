@@ -30,7 +30,7 @@ v2."
   tag cis_controls: ["14.4", "4.5"]
   tag cis_rid: "5.2.4"
   tag cis_scored: true
-  tag cis_version: 2.0.1
+  tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
   describe sshd_config do
     its('Protocol') { should cmp 2 }
