@@ -41,6 +41,6 @@ from unauthorized changes by non-privileged users."
     it { should be_file }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
-    its('mode') { should cmp '00600' }
+    it { should_not be_more_permissive_than('0600') }
   end
 end
