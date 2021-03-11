@@ -39,14 +39,14 @@ availability."
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-4", "Rev_4"]
+  tag nist: ["AU-4"]
   tag cis_level: 2
-  tag cis_controls: ["6.4", "Rev_7"]
+  tag cis_controls: ["6.4"]
   tag cis_rid: "4.1.2.3"
+
+  describe auditd_conf do
+    its('space_left_action') { should cmp 'email' }
+    its('action_mail_acct') { should cmp 'root' }
+    its('admin_space_left_action') { should cmp 'halt' }
+  end
 end

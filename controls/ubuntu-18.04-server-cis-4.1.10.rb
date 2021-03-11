@@ -124,14 +124,23 @@ ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-2", "Rev_4"]
+  tag nist: ["AU-2"]
   tag cis_level: 2
-  tag cis_controls: ["14.9", "Rev_7"]
+  tag cis_controls: ["14.9"]
   tag cis_rid: "4.1.10"
+
+
+  if command("uname -m").stdout.include? "x86_64"
+    describe auditd do
+      its('lines') { should include "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+      its('lines') { should include "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+    end
+  else
+    describe auditd do
+      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+    end
+  end
 end

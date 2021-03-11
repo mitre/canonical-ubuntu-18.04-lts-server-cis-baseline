@@ -103,14 +103,24 @@ directory ending in `.rules`
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6", "Rev_4"]
+  tag nist: ["CM-6"]
   tag cis_level: 2
-  tag cis_controls: ["5.1", "Rev_7"]
+  tag cis_controls: ["5.1"]
   tag cis_rid: "4.1.16"
+
+  if command("uname -m").stdout.include? "x86_64"
+    describe auditd do
+      its('lines') { should include "-w /sbin/insmod -p x -k modules" }
+      its('lines') { should include "-w /sbin/rmmod -p x -k modules" }
+      its('lines') { should include "-w /sbin/modprobe -p x -k modules" }
+      its('lines') { should include "-a always,exit -F arch=b64 -S init_module -S delete_module -k modules" }
+    end
+  else
+    describe auditd do
+      its('lines') { should include "-w /sbin/insmod -p x -k modules" }
+      its('lines') { should include "-w /sbin/rmmod -p x -k modules" }
+      its('lines') { should include "-w /sbin/modprobe -p x -k modules" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S init_module -S delete_module -k modules" }
+    end
+  end
 end

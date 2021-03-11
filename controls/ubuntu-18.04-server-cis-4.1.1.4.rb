@@ -41,14 +41,17 @@ is set to an appropriate size for your organization
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-12", "AU-3", "Rev_4"]
+  tag nist: ["AU-12", "AU-3"]
   tag cis_level: 2
-  tag cis_controls: ["6.2", "6.3", "Rev_7"]
+  tag cis_controls: ["6.2", "6.3"]
   tag cis_rid: "4.1.1.4"
+  grep_command = command("grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"audit_backlog_limit=\"").stdout.lines
+  describe grep_command do
+    it { should be_empty }
+  end
+  grep_command.each do |line|
+    describe line.chomp do
+      it { should include "audit_backlog_limit=" }
+    end
+  end
 end

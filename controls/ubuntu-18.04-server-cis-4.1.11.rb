@@ -74,14 +74,15 @@ auid!=4294967295 \\
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6", "Rev_4"]
+  tag nist: ["CM-6"]
   tag cis_level: 2
-  tag cis_controls: ["5.1", "Rev_7"]
+  tag cis_controls: ["5.1"]
   tag cis_rid: "4.1.11"
+  command("mount |grep -v noexec|cut -d' ' -f3").stdout.lines.each do |line|
+    command("find #{line.chomp} -xdev \\( -perm -4000 -o -perm -2000 \\) -type f").stdout.lines.each do |executable|
+      describe auditd do
+        its('lines') { should include "-a always,exit -F path=#{executable.chomp} -F perm=x -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k privileged" }
+      end
+    end
+  end
 end

@@ -155,14 +155,25 @@ removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6 (1)", "Rev_4"]
+  tag nist: ["CM-6 (1)"]
   tag cis_level: 2
-  tag cis_controls: ["5.5", "Rev_7"]
+  tag cis_controls: ["5.5"]
   tag cis_rid: "4.1.9"
+
+  if command("uname -m").stdout.include? "x86_64"
+    describe auditd do
+      its('lines') { should include "-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+      its('lines') { should include "-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+      its('lines') { should include "-a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+    end
+  else
+    describe auditd do
+      its('lines') { should include "-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k perm_mod" }
+    end
+  end
 end

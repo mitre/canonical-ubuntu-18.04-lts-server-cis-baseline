@@ -33,4 +33,12 @@ access to their system is occurring."
   tag cis_level: 2
   tag cis_controls: ["6.2", "6.3", "Rev_7"]
   tag cis_rid: "4.1.1.1"
+
+  describe package('auditd') do
+    it { should be_installed }
+  end
+  
+  describe package('audispd-plugins') do
+    it { should be_installed }
+  end
 end

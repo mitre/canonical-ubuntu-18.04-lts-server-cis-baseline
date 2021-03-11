@@ -119,14 +119,27 @@ directory ending in `.rules`
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6 (1)", "Rev_4"]
+  tag nist: ["CM-6 (1)"]
   tag cis_level: 2
-  tag cis_controls: ["5.5", "Rev_7"]
+  tag cis_controls: ["5.5"]
   tag cis_rid: "4.1.5"
+
+  if command("uname -m").stdout.include? "x86_64"
+    describe auditd do
+      its('lines') { should include "-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale" }
+      its('lines') { should include "-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale" }
+      its('lines') { should include "-w /etc/issue -p wa -k system-locale" }
+      its('lines') { should include "-w /etc/issue.net -p wa -k system-locale" }
+      its('lines') { should include "-w /etc/hosts -p wa -k system-locale" }
+      its('lines') { should include "-w /etc/network -p wa -k system-locale" }
+    end
+  else
+    describe auditd do
+      its('lines') { should include "-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale" }
+      its('lines') { should include "-w /etc/issue -p wa -k system-locale" }
+      its('lines') { should include "-w /etc/issue.net -p wa -k system-locale" }
+      its('lines') { should include "-w /etc/hosts -p wa -k system-locale" }
+      its('lines') { should include "-w /etc/network -p wa -k system-locale" }
+    end
+  end
 end
