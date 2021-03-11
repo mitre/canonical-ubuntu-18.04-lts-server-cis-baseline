@@ -57,10 +57,11 @@ hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-s
   tag cis_scored: true
   tag cis_version: "2.0.1"
   tag cis_cdc_version: 7
-  describe sshd_config do
+  cfg = sshd_config
+  describe cfg do
     describe 'it should have defined MACs' do
       subject { cfg.MACs }
-        it { should_not be_empty }
+      it { should_not be_empty }
     end
     its('MACs') { should_not include(
       'hmac-md5', 

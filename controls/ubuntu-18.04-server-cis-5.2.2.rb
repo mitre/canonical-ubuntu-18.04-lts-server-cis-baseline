@@ -67,7 +67,7 @@ SSH host key files
     find_command = command("find /etc/ssh -xdev -type f -name 'ssh_host_*_key'").stdout.lines
     unless find_command.empty?
       find_command.each do |key_file|
-        describe file(key_file) do
+        describe file(key_file.chomp) do
           it { should be_file }
           it { should be_owned_by 'root' }
           it { should be_grouped_into 'root' }
