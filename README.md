@@ -150,6 +150,7 @@ KITCHEN_LOCAL_YAML=kitchen.vagrant.yml CHEF_LICENSE=accept kitchen verify harden
 Update submodules
 ```
 git submodule update --init --recursive
+git submodule update --remote
 ```
 
 ## NOTICE
