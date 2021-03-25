@@ -1,13 +1,3 @@
-TOMCAT_REALMS_LIST= attribute(
-    'tomcat_realms_list',
-    description: 'A list of Realms that should not be enabled',
-    default: ['org.apache.catalina.realm.MemoryRealm',
-              'org.apache.catalina.realm.JDBCRealm',
-              'org.apache.catalina.realm.UserDatabaseRealm',
-              'org.apache.catalina.realm.JAASRealm']
-)
-
-
 control "C-3.3.2" do
   title "Ensure /etc/hosts.allow is configured"
   desc  "The `/etc/hosts.allow` file specifies which IP addresses are permitted

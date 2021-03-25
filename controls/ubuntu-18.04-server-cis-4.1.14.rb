@@ -41,15 +41,9 @@ unauthorized change has been made to scope of system administrator activity."
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-2 (4)", "Rev_4"]
+  tag nist: ["AC-2 (4)"]
   tag cis_level: 2
-  tag cis_controls: ["4.8", "Rev_7"]
+  tag cis_controls: ["4.8"]
   tag cis_rid: "4.1.14"
   describe auditd do
     its('lines') { should include "-w /etc/sudoers -p wa -k scope" }

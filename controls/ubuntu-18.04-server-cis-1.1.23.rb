@@ -43,9 +43,9 @@ control "C-1.1.23" do
   tag nist: ["SI-3", "SC-18(4)"]
   tag cis_level: 1
   tag cis_controls: ["8.4", "8.5"]
-  tag cis_rid: "1.1.23"
+  tag cis_rid: '1.1.23'
   tag cis_scored: true
-  tag cis_version: "2.0.1"
+  tag cis_version: '2.0.1'
   tag cis_cdc_version: 7
  
   describe kernel_module('usb_storage') do

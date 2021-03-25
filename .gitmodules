@@ -1,0 +1,4 @@
+[submodule "spec/ansible/roles/ansible-role-ubuntu-server-cis-hardening"]
+	path = spec/ansible/roles/ansible-role-ubuntu-server-cis-hardening
+	url = https://github.com/florianutz/Ubuntu1804-CIS.git
+	branch = master
