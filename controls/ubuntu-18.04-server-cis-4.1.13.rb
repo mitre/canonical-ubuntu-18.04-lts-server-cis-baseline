@@ -108,6 +108,7 @@ auid>=1000 -F auid!=4294967295 -k delete
   tag nist: ["SC-1"]
   tag cis_level: 2
   tag cis_controls: ["13"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.13"
 
   if command("uname -m").stdout.include? "x86_64"

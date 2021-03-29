@@ -77,6 +77,7 @@ auid!=4294967295 \\
   tag nist: ["CM-6"]
   tag cis_level: 2
   tag cis_controls: ["5.1"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.11"
   command("mount |grep -v noexec|cut -d' ' -f3").stdout.lines.each do |line|
     command("find #{line.chomp} -xdev \\( -perm -4000 -o -perm -2000 \\) -type f").stdout.lines.each do |executable|

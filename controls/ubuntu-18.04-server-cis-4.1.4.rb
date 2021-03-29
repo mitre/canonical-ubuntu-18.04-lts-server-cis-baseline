@@ -63,6 +63,7 @@ attempting to hide their activities or compromise additional accounts."
   tag nist: ["AC-2 (4)"]
   tag cis_level: 2
   tag cis_controls: ["4.8"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.4"
   describe auditd do
     its('lines') { should include "-w /etc/group -p wa -k identity" }

@@ -56,6 +56,7 @@ logins."
   tag nist: ["AU-2", "AC-11", "AC-2(12)"]
   tag cis_level: 2
   tag cis_controls: ["4.9", "16.11", "16.13"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.7"
 
   describe auditd do

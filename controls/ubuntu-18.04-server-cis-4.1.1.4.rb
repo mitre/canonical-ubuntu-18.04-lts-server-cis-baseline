@@ -44,6 +44,7 @@ is set to an appropriate size for your organization
   tag nist: ["AU-12", "AU-3"]
   tag cis_level: 2
   tag cis_controls: ["6.2", "6.3"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.1.4"
   grep_command = command("grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"audit_backlog_limit=\"").stdout.lines
   describe grep_command do

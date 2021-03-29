@@ -44,6 +44,7 @@ unauthorized change has been made to scope of system administrator activity."
   tag nist: ["AC-2 (4)"]
   tag cis_level: 2
   tag cis_controls: ["4.8"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.14"
   describe auditd do
     its('lines') { should include "-w /etc/sudoers -p wa -k scope" }

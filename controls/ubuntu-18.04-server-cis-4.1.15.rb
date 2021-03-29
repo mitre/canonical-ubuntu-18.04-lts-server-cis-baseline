@@ -62,6 +62,7 @@ the output includes a file path
   tag nist: ["AU-2"]
   tag cis_level: 2
   tag cis_controls: ["4.9"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.15"
   sudo_log_file = command("grep -r logfile /etc/sudoers* | sed -e 's/.*logfile=//;s/,? .*//;s/\"//g'").stdout
   describe "sudo log file" do

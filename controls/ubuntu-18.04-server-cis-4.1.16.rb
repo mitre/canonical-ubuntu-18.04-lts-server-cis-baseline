@@ -106,6 +106,7 @@ directory ending in `.rules`
   tag nist: ["CM-6"]
   tag cis_level: 2
   tag cis_controls: ["5.1"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.16"
 
   if command("uname -m").stdout.include? "x86_64"

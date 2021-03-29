@@ -36,6 +36,7 @@ parameter set:
   tag nist: ["AU-12", "AU-3"]
   tag cis_level: 2
   tag cis_controls: ["6.2", "6.3"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.1.3"
   describe command("grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"audit=1\" | grep -v '/boot/memtest86+.bin'").stdout do
     it { should be_empty }

@@ -29,6 +29,7 @@ access to their system is occurring."
   tag nist: ["AU-12", "AU-3"]
   tag cis_level: 2
   tag cis_controls: ["6.2", "6.3"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.1.2"
 
   describe service('auditd') do

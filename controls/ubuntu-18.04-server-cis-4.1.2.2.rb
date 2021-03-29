@@ -28,6 +28,7 @@ long audit history exceed the cost of storing the audit history."
   tag nist: ["AU-4"]
   tag cis_level: 2
   tag cis_controls: ["6.4"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.2.2"
   describe auditd_conf do
     its('max_log_file_action') { should cmp 'keep_logs' }

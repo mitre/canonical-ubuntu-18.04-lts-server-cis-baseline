@@ -127,6 +127,7 @@ ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
   tag nist: ["AU-2"]
   tag cis_level: 2
   tag cis_controls: ["14.9"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.10"
 
 
