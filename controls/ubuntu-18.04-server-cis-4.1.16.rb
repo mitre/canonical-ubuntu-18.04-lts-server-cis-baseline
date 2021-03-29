@@ -109,19 +109,15 @@ directory ending in `.rules`
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.16"
 
-  if command("uname -m").stdout.include? "x86_64"
+  describe auditd do
+    its('lines') { should include "-w /sbin/insmod -p x -k modules" }
+    its('lines') { should include "-w /sbin/rmmod -p x -k modules" }
+    its('lines') { should include "-w /sbin/modprobe -p x -k modules" }
+    its('lines') { should include "-a always,exit -F arch=b32 -S init_module -S delete_module -k modules" }
+  end
+  if os.arch.match?(/64/)
     describe auditd do
-      its('lines') { should include "-w /sbin/insmod -p x -k modules" }
-      its('lines') { should include "-w /sbin/rmmod -p x -k modules" }
-      its('lines') { should include "-w /sbin/modprobe -p x -k modules" }
       its('lines') { should include "-a always,exit -F arch=b64 -S init_module -S delete_module -k modules" }
-    end
-  else
-    describe auditd do
-      its('lines') { should include "-w /sbin/insmod -p x -k modules" }
-      its('lines') { should include "-w /sbin/rmmod -p x -k modules" }
-      its('lines') { should include "-w /sbin/modprobe -p x -k modules" }
-      its('lines') { should include "-a always,exit -F arch=b32 -S init_module -S delete_module -k modules" }
     end
   end
 end

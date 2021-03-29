@@ -114,14 +114,13 @@ mounts
   tag cis_controls: ["5.1"]
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.12"
-  if command("uname -m").stdout.include? "x86_64"
+
+  describe auditd do
+    its('lines') { should include "-a always,exit -F arch=b32 -S mount -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k mounts" }
+  end
+  if os.arch.match?(/64/)
     describe auditd do
       its('lines') { should include "-a always,exit -F arch=b64 -S mount -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k mounts" }
-      its('lines') { should include "-a always,exit -F arch=b32 -S mount -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k mounts" }
-    end
-  else
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b32 -S mount -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k mounts" }
     end
   end
 end

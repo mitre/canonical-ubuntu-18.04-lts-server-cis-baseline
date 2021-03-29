@@ -125,22 +125,16 @@ directory ending in `.rules`
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.5"
 
-  if command("uname -m").stdout.include? "x86_64"
+  describe auditd do
+    its('lines') { should include "-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale" }
+    its('lines') { should include "-w /etc/issue -p wa -k system-locale" }
+    its('lines') { should include "-w /etc/issue.net -p wa -k system-locale" }
+    its('lines') { should include "-w /etc/hosts -p wa -k system-locale" }
+    its('lines') { should include "-w /etc/network -p wa -k system-locale" }
+  end
+  if os.arch.match?(/64/)
     describe auditd do
       its('lines') { should include "-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale" }
-      its('lines') { should include "-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale" }
-      its('lines') { should include "-w /etc/issue -p wa -k system-locale" }
-      its('lines') { should include "-w /etc/issue.net -p wa -k system-locale" }
-      its('lines') { should include "-w /etc/hosts -p wa -k system-locale" }
-      its('lines') { should include "-w /etc/network -p wa -k system-locale" }
-    end
-  else
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale" }
-      its('lines') { should include "-w /etc/issue -p wa -k system-locale" }
-      its('lines') { should include "-w /etc/issue.net -p wa -k system-locale" }
-      its('lines') { should include "-w /etc/hosts -p wa -k system-locale" }
-      its('lines') { should include "-w /etc/network -p wa -k system-locale" }
     end
   end
 end

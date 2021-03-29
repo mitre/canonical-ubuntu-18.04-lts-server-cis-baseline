@@ -130,18 +130,14 @@ ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.10"
 
-
-  if command("uname -m").stdout.include? "x86_64"
+  describe auditd do
+    its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+    its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
+  end
+  if os.arch.match?(/64/)
     describe auditd do
       its('lines') { should include "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
-      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
       its('lines') { should include "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
-      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
-    end
-  else
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
-      its('lines') { should include "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k access" }
     end
   end
 end

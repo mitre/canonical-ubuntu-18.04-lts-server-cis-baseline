@@ -47,7 +47,8 @@ is set to an appropriate size for your organization
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.1.4"
   grep_command = command("grep \"^\\s*linux\" /boot/grub/grub.cfg | grep -v \"audit_backlog_limit=\"").stdout.lines
-  describe grep_command do
+  describe "All grub bootloader linux lines should include an audit_backlog_limit parameter" do
+    subject { grep_command }
     it { should be_empty }
   end
   grep_command.each do |line|
