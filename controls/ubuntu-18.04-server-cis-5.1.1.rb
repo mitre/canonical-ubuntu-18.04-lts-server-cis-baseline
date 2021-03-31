@@ -28,14 +28,14 @@ following commands to enable `cron`:
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-6", "Rev_4"]
+  tag nist: ["AU-6"]
   tag cis_level: 1
-  tag cis_controls: ["6", "Rev_7"]
+  tag cis_controls: ["6"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "5.1.1"
+
+  describe systemd_service('cron') do
+    it { should be_enabled }
+  end
+  
 end

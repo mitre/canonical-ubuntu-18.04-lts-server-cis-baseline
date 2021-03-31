@@ -71,14 +71,29 @@ and create and set permissions and ownership for `/etc/cron.allow` and
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-3 (3)", "Rev_4"]
+  tag nist: ["AC-3 (3)"]
   tag cis_level: 1
-  tag cis_controls: ["14.6", "Rev_7"]
+  tag cis_controls: ["14.6"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "5.1.8"
+
+  describe file('/etc/cron.deny') do 
+    it { should_not exist }
+  end
+  
+  describe file('/etc/at.deny') do 
+    it { should_not exist }
+  end
+
+  describe file('/etc/cron.allow') do 
+    its('owner') { should cmp 'root' }
+    its('group') { should cmp 'root' }
+    it { should_not be_more_permissive_than('0640') }
+  end
+
+  describe file('/etc/at.allow') do 
+    its('owner') { should cmp 'root' }
+    its('group') { should cmp 'root' }
+    it { should_not be_more_permissive_than('0640') }
+  end
 end
