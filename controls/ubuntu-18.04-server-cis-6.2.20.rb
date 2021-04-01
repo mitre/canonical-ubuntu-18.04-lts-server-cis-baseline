@@ -26,14 +26,15 @@ additional user accounts."
 group of any users with shadow as their primary group."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-3 (3)", "Rev_4"]
+  tag nist: ["AC-3 (3)"]
   tag cis_level: 1
-  tag cis_controls: ["14.6", "Rev_7"]
+  tag cis_controls: ["14.6"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.2.20"
+
+  describe groups.where { name == 'shadow' } do
+    it { should exist }
+    its('members') { should be_empty }
+  end
+
 end

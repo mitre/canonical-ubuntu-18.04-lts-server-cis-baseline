@@ -24,14 +24,16 @@ not properly managed."
 appropriate action to correct any discrepancies found."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-2", "AC-2", "AC-2", "Rev_4"]
+  tag nist: ["AC-2", "AC-2", "AC-2"]
   tag cis_level: 1
-  tag cis_controls: ["16.6", "16.7", "16.8", "Rev_7"]
+  tag cis_controls: ["16.6", "16.7", "16.8"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.2.15"
+
+  # passwd.gids returns a list of strings, while groups.gids returns a list of integers
+  all_gids = groups.gids.map { |gid| gid.to_s }
+
+  describe passwd do
+    its('gids') { should be_in all_gids }
+  end
 end

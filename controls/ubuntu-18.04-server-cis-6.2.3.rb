@@ -25,14 +25,18 @@ make sure the respective user owns the directory. Users without an assigned
 home directory should be removed or assigned a home directory as appropriate."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6", "Rev_4"]
+  tag nist: ["CM-6"]
   tag cis_level: 1
-  tag cis_controls: ["5.1", "Rev_7"]
+  tag cis_controls: ["5.1"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.2.3"
+
+  nologin = command("which nologin").stdout.strip
+
+  passwd.where { user != 'halt' && user != 'sync' && user != 'shutdown' && shell != nologin }.entries.each do |user|
+    describe file(user.home) do
+      it { should exist }
+      it { should be_directory }
+    end
+  end
 end

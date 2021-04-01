@@ -52,14 +52,21 @@ user `.netrc` file permissions and determine the action to be taken in
 accordance with site policy."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-3 (3)", "Rev_4"]
+  tag nist: ["AC-3 (3)"]
   tag cis_level: 1
-  tag cis_controls: ["14.6", "Rev_7"]
+  tag cis_controls: ["14.6"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.2.13"
+  nologin = command("which nologin").stdout.strip
+  
+  passwd.where { user != 'halt' && user != 'sync' && user != 'shutdown' && shell != nologin }.entries.each do |user|
+    describe.one do
+      describe file("#{user.home}/.netrc") do
+        it { should_not exist }
+      end
+      describe file("#{user.home}/.netrc") do
+        it { should_not be_more_permissive_than('0600') }
+      end
+    end
+  end
 end
