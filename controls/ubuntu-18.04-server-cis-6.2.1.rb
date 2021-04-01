@@ -28,14 +28,13 @@ being used for to determine if it needs to be forced off.
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["IA-5 (1)", "Rev_4"]
+  tag nist: ["IA-5 (1)"]
   tag cis_level: 1
-  tag cis_controls: ["4.4", "Rev_7"]
+  tag cis_controls: ["4.4"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.2.1"
+
+  describe shadow.where(password: '') do
+    its('users') { should be_empty }
+  end
 end

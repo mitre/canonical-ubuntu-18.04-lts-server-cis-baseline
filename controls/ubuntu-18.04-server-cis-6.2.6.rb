@@ -20,14 +20,14 @@ access to the su command is restricted."
 a new UID if appropriate."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["SC-2", "Rev_4"]
+  tag nist: ["SC-2"]
   tag cis_level: 1
-  tag cis_controls: ["4.6", "Rev_7"]
+  tag cis_controls: ["4.6"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.2.6"
+
+  describe passwd.uids(0) do
+    its('users') { should cmp 'root' }
+    its('count') { should eq 1 }
+  end
 end

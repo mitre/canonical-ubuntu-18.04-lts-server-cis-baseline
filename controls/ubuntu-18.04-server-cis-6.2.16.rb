@@ -26,14 +26,15 @@ and review all files owned by the shared UIDs to determine which UID they are
 supposed to belong to."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-2", "Rev_4"]
+  tag nist: ["AC-2"]
   tag cis_level: 1
-  tag cis_controls: ["16", "Rev_7"]
+  tag cis_controls: ["16"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.2.16"
+
+  passwd.entries.each do |user|
+    describe passwd.uids(user.uid) do
+      its('count') { should eq 1 }
+    end
+  end
 end
