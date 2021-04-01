@@ -23,14 +23,17 @@ access to their system is occurring."
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-12", "AU-3", "Rev_4"]
+  tag nist: ["AU-12", "AU-3"]
   tag cis_level: 2
-  tag cis_controls: ["6.2", "6.3", "Rev_7"]
+  tag cis_controls: ["6.2", "6.3"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.1.1"
+
+  describe package('auditd') do
+    it { should be_installed }
+  end
+  
+  describe package('audispd-plugins') do
+    it { should be_installed }
+  end
 end

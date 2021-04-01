@@ -60,14 +60,16 @@ attempting to hide their activities or compromise additional accounts."
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-2 (4)", "Rev_4"]
+  tag nist: ["AC-2 (4)"]
   tag cis_level: 2
-  tag cis_controls: ["4.8", "Rev_7"]
+  tag cis_controls: ["4.8"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.4"
+  describe auditd do
+    its('lines') { should include "-w /etc/group -p wa -k identity" }
+    its('lines') { should include "-w /etc/passwd -p wa -k identity" }
+    its('lines') { should include "-w /etc/gshadow -p wa -k identity" }
+    its('lines') { should include "-w /etc/shadow -p wa -k identity" }
+    its('lines') { should include "-w /etc/security/opasswd -p wa -k identity" }
+  end
 end

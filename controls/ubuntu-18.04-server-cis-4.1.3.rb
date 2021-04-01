@@ -103,14 +103,21 @@ time-change
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6 (1)", "Rev_4"]
+  tag nist: ["CM-6 (1)"]
   tag cis_level: 2
-  tag cis_controls: ["5.5", "Rev_7"]
+  tag cis_controls: ["5.5"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.3"
+  describe auditd do
+    its('lines') { should include "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change" }
+    its('lines') { should include "-a always,exit -F arch=b32 -S clock_settime -k time-change" }
+    its('lines') { should include "-w /etc/localtime -p wa -k time-change" }
+  end
+
+  if os.arch.match?(/64/)
+    describe auditd do
+      its('lines') { should include "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change" }
+      its('lines') { should include "-a always,exit -F arch=b64 -S clock_settime -k time-change" }
+    end
+  end
 end

@@ -57,14 +57,15 @@ log in)."
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-2", "AC-11", "AC-2(12)", "Rev_4"]
+  tag nist: ["AU-2", "AC-11", "AC-2(12)"]
   tag cis_level: 2
-  tag cis_controls: ["4.9", "16.11", "16.13", "Rev_7"]
+  tag cis_controls: ["4.9", "16.11", "16.13"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.8"
+
+  describe auditd do
+    its('lines') { should include "-w /var/run/utmp -p wa -k session" }
+    its('lines') { should include "-w /var/log/wtmp -p wa -k logins" }
+    its('lines') { should include "-w /var/log/btmp -p wa -k logins" }
+  end
 end

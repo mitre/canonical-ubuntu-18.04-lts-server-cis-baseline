@@ -59,14 +59,17 @@ the output includes a file path
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-2", "Rev_4"]
+  tag nist: ["AU-2"]
   tag cis_level: 2
-  tag cis_controls: ["4.9", "Rev_7"]
+  tag cis_controls: ["4.9"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.1.15"
+  sudo_log_file = command("grep -r logfile /etc/sudoers* | sed -e 's/.*logfile=//;s/,? .*//;s/\"//g'").stdout
+  describe "sudo log file" do
+    subject{ sudo_log_file }
+    it { should_not be_empty }
+  end
+  describe auditd do
+    its('lines') { should include "-w #{sudo_log_file.chomp} -p wa -k actions" }
+  end
 end
