@@ -125,16 +125,30 @@ directory ending in `.rules`
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.5"
 
-  describe auditd do
-    its('lines') { should include "-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale" }
-    its('lines') { should include "-w /etc/issue -p wa -k system-locale" }
-    its('lines') { should include "-w /etc/issue.net -p wa -k system-locale" }
-    its('lines') { should include "-w /etc/hosts -p wa -k system-locale" }
-    its('lines') { should include "-w /etc/network -p wa -k system-locale" }
+  files = [
+    '/etc/issue',
+    '/etc/issue.net',
+    '/etc/hosts',
+    '/etc/network'
+  ]
+
+  files.each do |file|
+    describe auditd.file(file).where { key == "system-locale" } do
+      its('permissions') { should include ['w', 'a'] }
+    end
   end
+
+  arches = ['b32']
   if os.arch.match?(/64/)
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale" }
+    arches.push('b64')
+  end
+
+  ['sethostname', 'setdomainname'].each do |syscall|
+    arches.each do |a|
+      describe auditd.syscall(syscall).where { arch == a && key == 'system-locale'  } do
+        its('action.uniq') { should eq ['always'] }
+        its('list.uniq') { should eq ['exit'] }
+      end
     end
   end
 end

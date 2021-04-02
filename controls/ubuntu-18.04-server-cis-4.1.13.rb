@@ -111,12 +111,37 @@ auid>=1000 -F auid!=4294967295 -k delete
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.13"
 
-  describe auditd do
-    its('lines') { should include "-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k delete" }
-  end
+
+  arches = ['b32']
   if os.arch.match?(/64/)
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k delete" }
+    arches.push('b64')
+  end
+
+  syscalls = [
+    'unlink',
+    'unlinkat',
+    'rename',
+    'renameat'
+  ]
+
+  syscalls.each do |syscall|
+    arches.each do |a|
+      describe auditd.syscall(syscall).where { arch == a && key == 'delete'  } do
+        its('action.uniq') { should eq ['always'] }
+        its('list.uniq') { should eq ['exit'] }
+        its('fields.flatten.uniq') {  should include "auid>=#{login_defs.UID_MIN}" }
+      end
+
+      # the rule states that `auid!=4294967295` but this comes back as `auid!=-1` when queries via `auditctl -l`
+      # this check will allow either.
+      describe.one do
+        describe auditd.syscall(syscall).where { arch == a && key == 'delete'  } do
+          its('fields.flatten.uniq') {  should include "auid!=-1" }
+        end
+        describe auditd.syscall(syscall).where { arch == a && key == 'delete'  } do
+          its('fields.flatten.uniq') {  should include "auid!=4294967295" }
+        end
+      end
     end
   end
 end

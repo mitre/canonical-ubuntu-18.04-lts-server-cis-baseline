@@ -115,12 +115,28 @@ mounts
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.12"
 
-  describe auditd do
-    its('lines') { should include "-a always,exit -F arch=b32 -S mount -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k mounts" }
-  end
+
+  arches = ['b32']
   if os.arch.match?(/64/)
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b64 -S mount -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k mounts" }
+    arches.push('b64')
+  end
+
+  syscall = 'mount'
+  arches.each do |a|
+    describe auditd.syscall(syscall).where { arch == a && key == 'mounts'  } do
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+    end
+
+    # the rule states that `auid!=4294967295` but this comes back as `auid!=-1` when queries via `auditctl -l`
+    # this check will allow either.
+    describe.one do
+      describe auditd.syscall(syscall).where { arch == a && key == 'mounts'  } do
+        its('fields.flatten.uniq') {  should include "auid!=-1" }
+      end
+      describe auditd.syscall(syscall).where { arch == a && key == 'mounts'  } do
+        its('fields.flatten.uniq') {  should include "auid!=4294967295" }
+      end
     end
   end
 end

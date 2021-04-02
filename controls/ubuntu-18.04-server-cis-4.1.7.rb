@@ -59,9 +59,16 @@ logins."
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.7"
 
-  describe auditd do
-    its('lines') { should include "-w /var/log/faillog -p wa -k logins" }
-    its('lines') { should include "-w /var/log/lastlog -p wa -k logins" }
-    its('lines') { should include "-w /var/log/tallylog -p wa -k logins" }
+
+  files = [
+    '/var/log/faillog',
+    '/var/log/lastlog',
+    '/var/log/tallylog'
+  ]
+
+  files.each do |file|
+    describe auditd.file(file).where { key == "logins" } do
+      its('permissions') { should include ['w', 'a'] }
+    end
   end
 end

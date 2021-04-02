@@ -69,7 +69,7 @@ the output includes a file path
     subject{ sudo_log_file }
     it { should_not be_empty }
   end
-  describe auditd do
-    its('lines') { should include "-w #{sudo_log_file.chomp} -p wa -k actions" }
+  describe auditd.file(sudo_log_file.chomp).where { key == "actions" } do
+    its('permissions') { should include ['w', 'a'] }
   end
 end

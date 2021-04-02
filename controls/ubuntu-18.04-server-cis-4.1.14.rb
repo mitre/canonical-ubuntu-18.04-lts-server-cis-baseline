@@ -46,8 +46,15 @@ unauthorized change has been made to scope of system administrator activity."
   tag cis_controls: ["4.8"]
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.14"
-  describe auditd do
-    its('lines') { should include "-w /etc/sudoers -p wa -k scope" }
-    its('lines') { should include "-w /etc/sudoers.d/ -p wa -k scope" }
+
+  files = [
+    '/etc/sudoers',
+    '/etc/sudoers.d'
+  ]
+
+  files.each do |file|
+    describe auditd.file(file).where { key == "scope" } do
+      its('permissions') { should include ['w', 'a'] }
+    end
   end
 end
