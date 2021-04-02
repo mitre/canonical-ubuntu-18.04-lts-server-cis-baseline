@@ -108,16 +108,26 @@ time-change
   tag cis_controls: ["5.5"]
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.3"
-  describe auditd do
-    its('lines') { should include "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change" }
-    its('lines') { should include "-a always,exit -F arch=b32 -S clock_settime -k time-change" }
-    its('lines') { should include "-w /etc/localtime -p wa -k time-change" }
+
+
+  ['adjtimex', 'settimeofday', 'stime', 'clock_settime'].each do |syscall|
+    describe auditd.syscall(syscall).where { arch == 'b32' && key == 'time-change'  } do
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+    end
+  end
+  
+  describe auditd.file('/etc/localtime').where { key == "time-change" } do
+    its('permissions') { should include ['w', 'a'] }
   end
 
   if os.arch.match?(/64/)
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change" }
-      its('lines') { should include "-a always,exit -F arch=b64 -S clock_settime -k time-change" }
+    ['adjtimex', 'settimeofday', 'clock_settime'].each do |syscall|
+      describe auditd.syscall(syscall).where { arch == 'b64' && key == 'time-change'  } do
+        its('action.uniq') { should eq ['always'] }
+        its('list.uniq') { should eq ['exit'] }
+      end
     end
   end
+  
 end

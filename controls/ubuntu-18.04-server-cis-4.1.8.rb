@@ -63,9 +63,19 @@ log in)."
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.8"
 
-  describe auditd do
-    its('lines') { should include "-w /var/run/utmp -p wa -k session" }
-    its('lines') { should include "-w /var/log/wtmp -p wa -k logins" }
-    its('lines') { should include "-w /var/log/btmp -p wa -k logins" }
+  files = [
+    '/var/log/wtmp',
+    '/var/log/btmp'
+  ]
+
+  files.each do |file|
+    describe auditd.file(file).where { key == "logins" } do
+      its('permissions') { should include ['w', 'a'] }
+    end
+  end
+
+
+  describe auditd.file('/var/run/utmp').where { key == "session" } do
+    its('permissions') { should include ['w', 'a'] }
   end
 end

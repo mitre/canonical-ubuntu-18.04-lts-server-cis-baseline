@@ -109,15 +109,35 @@ directory ending in `.rules`
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.16"
 
-  describe auditd do
-    its('lines') { should include "-w /sbin/insmod -p x -k modules" }
-    its('lines') { should include "-w /sbin/rmmod -p x -k modules" }
-    its('lines') { should include "-w /sbin/modprobe -p x -k modules" }
-    its('lines') { should include "-a always,exit -F arch=b32 -S init_module -S delete_module -k modules" }
+  files = [
+    '/sbin/insmod',
+    '/sbin/rmmod',
+    '/sbin/modprobe'
+  ]
+
+  files.each do |file|
+    describe auditd.file(file).where { key == "modules" } do
+      its('permissions.uniq') { should include ['x'] }
+    end
   end
+
+
+  arches = ['b32']
   if os.arch.match?(/64/)
-    describe auditd do
-      its('lines') { should include "-a always,exit -F arch=b64 -S init_module -S delete_module -k modules" }
+    arches.push('b64')
+  end
+
+  syscalls = [
+    'init_module',
+    'delete_module'
+  ]
+
+  syscalls.each do |syscall|
+    arches.each do |a|
+      describe auditd.syscall(syscall).where { arch == a && key == 'modules'  } do
+        its('action.uniq') { should eq ['always'] }
+        its('list.uniq') { should eq ['exit'] }
+      end
     end
   end
 end

@@ -56,8 +56,15 @@ security contexts, leading to a compromise of the system."
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.6"
 
-  describe auditd do
-    its('lines') { should include "-w /etc/apparmor/ -p wa -k MAC-policy" }
-    its('lines') { should include "-w /etc/apparmor.d/ -p wa -k MAC-policy" }
+
+  files = [
+    '/etc/apparmor/',
+    '/etc/apparmor.d/'
+  ]
+
+  files.each do |file|
+    describe auditd.file(file).where { key == "MAC-policy" } do
+      its('permissions') { should include ['w', 'a'] }
+    end
   end
 end

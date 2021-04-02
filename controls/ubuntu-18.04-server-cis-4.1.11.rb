@@ -81,8 +81,21 @@ auid!=4294967295 \\
   tag cis_rid: "4.1.11"
   command("mount |grep -v noexec|cut -d' ' -f3").stdout.lines.each do |line|
     command("find #{line.chomp} -xdev \\( -perm -4000 -o -perm -2000 \\) -type f").stdout.lines.each do |executable|
-      describe auditd do
-        its('lines') { should include "-a always,exit -F path=#{executable.chomp} -F perm=x -F auid>=#{login_defs.UID_MIN} -F auid!=4294967295 -k privileged" }
+      describe auditd.where { key == 'privileged' && path == executable} do
+        its('action.uniq') { should eq ['always'] }
+        its('list.uniq') { should eq ['exit'] }
+        its('permissions') { should include ['x'] }
+      end
+
+      # the rule states that `auid!=4294967295` but this comes back as `auid!=-1` when queries via `auditctl -l`
+      # this check will allow either.
+      describe.one do
+        describe auditd.where { key == 'privileged' && path == executable} do
+          its('fields.flatten.uniq') {  should include "auid!=-1" }
+        end
+        describe auditd.where { key == 'privileged' && path == executable} do
+          its('fields.flatten.uniq') {  should include "auid!=4294967295" }
+        end
       end
     end
   end
