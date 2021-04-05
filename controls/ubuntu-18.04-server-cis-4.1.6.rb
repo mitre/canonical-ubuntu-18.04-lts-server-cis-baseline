@@ -56,10 +56,9 @@ security contexts, leading to a compromise of the system."
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.6"
 
-
   files = [
-    '/etc/apparmor/',
-    '/etc/apparmor.d/'
+    '/etc/apparmor', # note no trailing `/` on directories
+    '/etc/apparmor.d'
   ]
 
   files.each do |file|

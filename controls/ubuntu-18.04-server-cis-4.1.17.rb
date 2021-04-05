@@ -36,7 +36,8 @@ line
   tag cis_cdc_version: "7"
   tag cis_rid: "4.1.17"
 
-  describe auditd do
-    its('lines') { should include "-e 2" }
+  last_line = command("grep \"^\\s*[^#]\" /etc/audit/audit.rules | tail -1")
+  describe last_line do
+    its('stdout.strip') { should cmp "-e 2" }
   end
 end
