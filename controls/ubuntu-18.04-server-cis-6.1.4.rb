@@ -33,14 +33,15 @@ user accounts."
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["SC-28", "Rev_4"]
+  tag nist: ["SC-28"]
   tag cis_level: 1
-  tag cis_controls: ["16.4", "Rev_7"]
+  tag cis_controls: ["16.4"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.1.4"
+
+  describe file('/etc/shadow') do
+    it { should_not be_more_permissive_than('0640') }
+    it { should be_owned_by 'root' }
+    its('group') { should be_in ['root', 'shadow'] }
+  end
 end

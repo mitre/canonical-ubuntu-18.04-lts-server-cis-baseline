@@ -32,14 +32,13 @@ the system configuration files, and reset the ownership of these files to some
 active user on the system as appropriate."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-8 (3)", "Rev_4"]
+  tag nist: ["CM-8 (3)"]
   tag cis_level: 1
-  tag cis_controls: ["13.2", "Rev_7"]
+  tag cis_controls: ["13.2"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.1.11"
+
+  describe command("df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -nouser") do
+    its('stdout') { should be_empty }
+  end
 end

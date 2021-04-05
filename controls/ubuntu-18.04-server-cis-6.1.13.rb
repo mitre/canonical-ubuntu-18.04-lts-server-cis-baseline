@@ -34,14 +34,13 @@ the system. Review the files returned by the action in the Audit section and
 confirm the integrity of these binaries."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6", "Rev_4"]
+  tag nist: ["CM-6"]
   tag cis_level: 1
-  tag cis_controls: ["5.1", "Rev_7"]
+  tag cis_controls: ["5.1"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.1.13"
+
+  describe command("df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -4000") do
+    skip 'This control must be reviewed manually. Run `df --local -P | awk \'{if (NR!=1) print $6}\' | xargs -I \'{}\' find \'{}\' -xdev -type f -perm -4000` and review the results.'
+  end
 end
