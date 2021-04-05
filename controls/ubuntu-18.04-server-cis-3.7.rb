@@ -30,14 +30,13 @@ verify no lines should be returned.
   "
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["RA-5", "CM-6", "CM-8", "SC-7(5)", "Rev_4"]
+  tag nist: ["RA-5", "CM-6", "CM-8", "SC-7(5)"]
   tag cis_level: 2
-  tag cis_controls: ["3", "11", "9.1", "9.4", "Rev_6"]
+  tag cis_controls: ["3", "11", "9.1", "9.4"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "3.7"
+
+  describe command('grep "^\\s*linux" /boot/grub/grub.cfg | grep -v "ipv6.disable=1"') do
+    its('stdout') { should be_empty }
+  end
 end
