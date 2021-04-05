@@ -29,14 +29,15 @@ actions."
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["SC-28", "Rev_4"]
+  tag nist: ["SC-28"]
   tag cis_level: 1
-  tag cis_controls: ["16.4", "Rev_7"]
+  tag cis_controls: ["16.4"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.1.8"
+
+  describe file('/etc/group') do
+    it { should_not be_more_permissive_than('0644') }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+  end
 end

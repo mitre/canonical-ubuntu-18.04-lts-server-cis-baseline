@@ -34,14 +34,13 @@ following command can be run manually for each partition:
 breaking any application dependencies on a given file."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-3 (3)", "Rev_4"]
+  tag nist: ["AC-3 (3)"]
   tag cis_level: 1
-  tag cis_controls: ["14.6", "Rev_7"]
+  tag cis_controls: ["14.6"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.1.10"
+
+  describe command("df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -0002") do
+    its('stdout') { should be_empty }
+  end
 end

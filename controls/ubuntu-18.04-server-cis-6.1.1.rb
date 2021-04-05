@@ -58,14 +58,14 @@ be reviewed later.
 output is clean or risk is mitigated or accepted."
   impact 0.7
   tag severity: "high"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AC-3 (3)", "Rev_4"]
+  tag nist: ["AC-3 (3)"]
   tag cis_level: 2
-  tag cis_controls: ["14.6", "Rev_7"]
+  tag cis_controls: ["14.6"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "6.1.1"
+
+  cmd = 'dpkg --verify'
+  describe command('dpkg --verify') do
+    skip "This control must be reviewed manually. Run `#{cmd}` and review the results."
+  end
 end
