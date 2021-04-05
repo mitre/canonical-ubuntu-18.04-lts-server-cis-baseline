@@ -51,14 +51,21 @@ group:
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["CM-6", "Rev_4"]
+  tag nist: ["CM-6"]
   tag cis_level: 1
-  tag cis_controls: ["5.1", "Rev_7"]
+  tag cis_controls: ["5.1"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "5.6"
+
+  cmd = command('grep pam_wheel.so /etc/pam.d/su')
+  re = /^\s*auth\s*required\s*pam_wheel.so\s*use_uid\s*group=(\w+)/
+  describe cmd do
+    its('stdout') { should match re }
+  end
+  group_match = cmd.stdout.match(re)
+  if group_match
+    describe group(group_match[1]) do
+      its('members') { should be_empty }
+    end
+  end
 end

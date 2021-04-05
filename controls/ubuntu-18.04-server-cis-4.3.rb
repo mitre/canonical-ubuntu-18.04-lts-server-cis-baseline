@@ -15,14 +15,13 @@ and verify logs are rotated according to site policy."
 ensure logs are rotated according to site policy."
   impact 0.5
   tag severity: "medium"
-  tag gtitle: nil
-  tag gid: nil
-  tag rid: nil
-  tag stig_id: nil
-  tag fix_id: nil
-  tag cci: nil
-  tag nist: ["AU-4", "Rev_4"]
+  tag nist: ["AU-4"]
   tag cis_level: 1
-  tag cis_controls: ["6.4", "Rev_7"]
+  tag cis_controls: ["6.4"]
+  tag cis_cdc_version: "7"
   tag cis_rid: "4.3"
+
+  describe "/etc/logrotate.conf and /etc/logrotate.d/rsyslog" do
+    skip "This control must be reviewed manually using the documented check."
+  end
 end
