@@ -37,9 +37,9 @@ and `Access` is `640` or more restrictive:
   tag cis_cdc_version: "7"
   tag cis_rid: "6.1.9"
 
-  describe file('/etc/gshadow-') do
+  describe file('/etc/gshadow') do
     it { should_not be_more_permissive_than('0640') }
     it { should be_owned_by 'root' }
-    its('group') { should be_in ['root', 'shadow'] }
+    its('group') { should cmp 'shadow' }
   end
 end
