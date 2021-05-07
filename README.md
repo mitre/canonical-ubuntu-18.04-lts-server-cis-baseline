@@ -1,10 +1,6 @@
 # canonical-ubuntu-18.04-lts-server-cis-baseline
 
-InSpec profile to validate the secure configuration of Canonical Ubuntu 18.04 LTS Server against the [Center for Internet Security](https://www.cisecurity.org/benchmark/ubuntu_linux/) - [CIS Ubuntu Linux 18.04 LTS Benchmark v2.0.1](https://www.cisecurity.org/benchmark/ubuntu_linux/).
-
-InSpec is an open-source run-time framework and rule language used to specify compliance, security, and policy requirements for testing any node in your infrastructure or an infrastructure.  
-
-In addition to the InSpec profile, this repository includes hardening content using Ansible (see `spec` directory) to help `test the tests` to ensure the accuracy and precision of the validation.
+InSpec profile to validate the secure configuration of Canonical Ubuntu 18.04 LTS Server against the [CIS'](https://www.cisecurity.org/cis-benchmarks/) - CIS Ubuntu Linux 18.04 LTS Benchmark v2.0.1.
 
 ## Getting Started
 
@@ -18,78 +14,86 @@ Latest versions and installation options are available at the [InSpec](http://in
 
 The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. More information about InSpec inputs can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
 
+```yaml
+# Name of the OS/Platform
+platform_name: ''
+
+# Release number of the OS/Platform
+platform_release: 18.04
+
+# Support end date for OS/Platform security updates
+supported_until: ''
+
+# Audit log file path
+log_file_path: ''
+
+# Audit log file directory
+log_file_dir: ''
+
+# Organization Name
+org_name: ''
+
+# Banner message text for command line interface logins.
+banner_message_text_cli: ''
+
+# Banner message text for resource-limited command line interface logins.
+banner_message_text_cli_limited: ''
+
+# These shells do not allow a user to login
+non_interactive_shells: []
 ```
-__*** Once we have them, put some example inputs here ...***__
+
+# Running This Baseline Directly from Github
+
 ```
-## Long Running Controls
-
-There are a few long running controls that take anywhere from 3 minutes to 10 minutes or more to run. In an ongoing or CI/CD pipelne this may not be ideal. We have supplied an input (mentioned above in the user-defined inputs) in the profile to allow you to 'skip' these controls to account for these situations.
-
-The input `disable_slow_controls (bool: false)` can be set to `true` or `false` as needed in a `<name_of_your_input_file>.yml` file.
-
-__***list them here if any otherwise remove this section***__
-
-## Running This Overlay Directly from Github
-
-Against a remote target using ssh with escalated privileges (i.e., InSpec installed on a separate runner host)
-```bash
-# How to run 
-inspec exec https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline/archive/master.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json> 
-```
-
-Against a remote target using a pem key with escalated privileges (i.e., InSpec installed on a separate runner host)
-```bash
-# How to run 
-inspec exec https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline/archive/master.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>  
-```
-
-Against a local Ubuntu host with escalated privileges (i.e., InSpec installed on the target)
-```bash
 # How to run
-sudo inspec exec https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline/archive/master.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json> 
+inspec exec https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline/archive/master.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
+
 ### Different Run Options
 
   [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
 
-## Running This Overlay from a local Archive copy
-If your runner is not always expected to have direct access to GitHub, use the following steps to create an archive bundle of this overlay and all of its dependent tests:
+## Running This Baseline from a local Archive copy 
 
-(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.) 
+If your runner is not always expected to have direct access to GitHub, use the following steps to create an archive bundle of this baseline and all of its dependent tests:
+
+(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.)
+
+When the __"runner"__ host uses this profile baseline for the first time, follow these steps: 
 
 ```
 mkdir profiles
 cd profiles
-git clone https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline.git
+git clone https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline
 inspec archive canonical-ubuntu-18.04-lts-server-cis-baseline
-sudo inspec exec <name of generated archive> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json> 
+inspec exec <name of generated archive> -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
-
-For every successive run, follow these steps to always have the latest version of this overlay and dependent profiles:
+For every successive run, follow these steps to always have the latest version of this baseline:
 
 ```
 cd canonical-ubuntu-18.04-lts-server-cis-baseline
 git pull
 cd ..
 inspec archive canonical-ubuntu-18.04-lts-server-cis-baseline --overwrite
-sudo inspec exec <name of generated archive> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json> 
+inspec exec <name of generated archive> -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
-## Review your scan results with [Heimdall-Lite](https://heimdall-lite.mitre.org)
-### What is Heimdall-Lite?
-Heimdall-Lite is a great open-source Security Results Viewer by the [MITRE Corporation](https://www.mitre.org) for reviewing your GCP CIS Benchmark scan results.  
+## Viewing the JSON Results
 
-Heimdall-Lite is one of many MITRE [Security Automation Framework](https://saf.mitre.org) (SAF) Supporting Tools working to enhance the Security Automation and DevSecOps communities.  
+The JSON results output file can be loaded into __[heimdall-lite](https://heimdall-lite.mitre.org/)__ for a user-interactive, graphical view of the InSpec results. 
 
-The [MITRE SAF](https://saf.mitre.org) is an open-source community partnership including Government, Industry and the Open Community working together to make truly automated security a reality. It also hosts many InSpec profiles created by the SAF and references to many partner developed profiles - **_including this one_**.  
+The JSON InSpec results file may also be loaded into a __[full heimdall server](https://github.com/mitre/heimdall)__, allowing for additional functionality such as to store and compare multiple profile runs.
 
-**Tip**: MITRE hosts Heimdall-Lite on GitHub pages, but you can easily run it in your environment via Docker or NPM or whatever suites your need. See the projects GitHub more information.
-   
-### Go to Heimdall Lite and Load your JSON formatted Results
+## Authors
+* MITRE SAF Team
 
-1. Navigate to [Heimdall Lite](https://heimdall-lite.mitre.org)
-2. Click `Local Files` on the left side of the loader
-3. Drag and Drop or select and load your `{{project-id}}_scan.json` file to review your results.
+## Special Thanks
+* Mohamed El-Sharkawi - [HackerShark](https://github.com/HackerShark)
+* Shivani Karikar - [karikarshivani](https://github.com/karikarshivani)
+
+## Contributing and Getting Help
+To report a bug or feature request, please open an [issue](https://github.com/mitre/canonical-ubuntu-18.04-lts-server-cis-baseline/issues/new).
 
 ## Development, Testing and PRs
 
@@ -155,7 +159,7 @@ git submodule update --remote
 
 ## NOTICE
 
-© 2020 The MITRE Corporation.
+© 2018-2020 The MITRE Corporation.
 
 Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
 
@@ -170,3 +174,7 @@ This software was produced for the U. S. Government under Contract Number HHSM-5
 No other use other than that granted to the U. S. Government, or to those acting on behalf of the U. S. Government under that Clause is authorized without the express written permission of The MITRE Corporation. 
 
 For further information, please contact The MITRE Corporation, Contracts Management Office, 7515 Colshire Drive, McLean, VA  22102-7539, (703) 983-6000.
+
+## NOTICE
+
+CIS Benchmarks are published by the Center for Internet Security (CIS), see: https://www.cisecurity.org/.
